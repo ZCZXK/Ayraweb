@@ -7,6 +7,13 @@ import { useState } from 'react'
 
 const suggestions = ['What does /config do?', 'Show moderation commands', 'How do I set up Ayra?']
 
+function fallbackReply(question: string) {
+  const normalized = question.toLowerCase()
+  if (normalized.includes('config') || normalized.includes('setup')) return 'Use /config to view or update Ayra server settings. Start with the prefix, moderation role, log channel, and language settings. Ayra needs the permissions required by the commands you enable.'
+  if (normalized.includes('moderation') || normalized.includes('ban') || normalized.includes('mute')) return 'Moderation commands include /ban, /unban, /kick, /mute, /unmute, /warn, /purge, /slowmode, /lock, and /unlock. Exact availability depends on your server permissions and configuration.'
+  return 'I can help with Ayra commands such as /help, /config, /support, /ping, moderation tools, server setup, tickets, giveaways, and utility commands. Ask about a specific command to get started.'
+}
+
 export function AyraChat() {
   const [input, setInput] = useState('')
   const { messages, sendMessage, status, error, setMessages } = useChat({
@@ -18,7 +25,18 @@ export function AyraChat() {
     const text = (value ?? input).trim()
     if (!text || isLoading) return
     setInput('')
-    await sendMessage({ text })
+    try {
+      await sendMessage({ text })
+    } catch {
+      setMessages((current) => [
+        ...current,
+        {
+          id: crypto.randomUUID(),
+          role: 'assistant',
+          parts: [{ type: 'text', text: fallbackReply(text) }],
+        },
+      ])
+    }
   }
 
   return (
