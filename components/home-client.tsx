@@ -8,7 +8,7 @@ const supportUrl = 'https://discord.gg/3dAVgmhd2f'
 const iconUrl = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/icon-I4IuZkcMvLdncAGMhjRGHiGnRSmjKW.png'
 
 const commandGroups = [
-  { name: 'Essentials', commands: ['help', 'support', 'prefix', 'config', 'ping', 'stats', 'botinfo', 'uptime', 'invite'] },
+  { name: 'Essentials', commands: ['help', 'support', 'prefix', 'config', 'ping', 'botinfo', 'uptime', 'invite'] },
   { name: 'Moderation', commands: ['ban', 'unban', 'kick', 'mute', 'unmute', 'warn', 'warnings', 'clearwarnings', 'purge', 'slowmode', 'lock', 'unlock', 'lockdown', 'tempban', 'softban', 'massban', 'hackban', 'voicekick', 'nuke', 'modlog'] },
   { name: 'Server setup', commands: ['setprefix', 'setautorole', 'setmodrole', 'language', 'announce', 'reportset', 'setchannel', 'mediaonly', 'reactionrole', 'nsfw', 'tag'] },
   { name: 'Community', commands: ['giveaway', 'ticket', 'afk', 'profile', 'userinfo', 'avatar', 'banner', 'nick', 'role', 'roleinfo', 'permissions', 'report', 'note', 'remind'] },
