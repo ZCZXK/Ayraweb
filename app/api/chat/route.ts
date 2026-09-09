@@ -22,10 +22,13 @@ export async function POST(request: Request) {
     if (!Array.isArray(body.messages)) return new Response('Invalid messages', { status: 400 })
 
     const result = streamText({
-      model: gateway('google/gemini-3.5-flash'),
+      model: gateway('google/gemini-2.5-flash'),
       system: `You are Ayra, a concise and friendly Discord bot guide. Answer questions about Ayra commands using the catalog below. Help users choose commands, explain setup, and be clear about permissions. Do not claim to execute commands or access a Discord server from this chat. ${commandContext}`,
       messages: await convertToModelMessages(body.messages),
       maxOutputTokens: 500,
+      onError: ({ error }) => {
+        console.error('[v0] Ayra model stream failed:', error)
+      },
     })
 
     return result.toUIMessageStreamResponse()
