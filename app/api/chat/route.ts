@@ -14,18 +14,23 @@ Advanced: invites, inviteleaderboard, invitelb, invitereset, invitetracker, invi
 Use slash-command formatting in replies. Explain that exact permissions and availability can vary by server configuration. Never invent live member or server counts; the website does not have a bot telemetry endpoint.`
 
 export async function POST(request: Request) {
-  const session = await auth.api.getSession({ headers: await headers() })
-  if (!session?.user) return new Response('Unauthorized', { status: 401 })
+  try {
+    const session = await auth.api.getSession({ headers: await headers() })
+    if (!session?.user) return new Response('Unauthorized', { status: 401 })
 
-  const body = (await request.json()) as { messages?: UIMessage[] }
-  if (!Array.isArray(body.messages)) return new Response('Invalid messages', { status: 400 })
+    const body = (await request.json()) as { messages?: UIMessage[] }
+    if (!Array.isArray(body.messages)) return new Response('Invalid messages', { status: 400 })
 
-  const result = streamText({
-    model: gateway('google/gemini-2.5-flash'),
-    system: `You are Ayra, a concise and friendly Discord bot guide. Answer questions about Ayra commands using the catalog below. Help users choose commands, explain setup, and be clear about permissions. Do not claim to execute commands or access a Discord server from this chat. ${commandContext}`,
-    messages: await convertToModelMessages(body.messages),
-    maxOutputTokens: 500,
-  })
+    const result = streamText({
+      model: gateway('google/gemini-3.5-flash'),
+      system: `You are Ayra, a concise and friendly Discord bot guide. Answer questions about Ayra commands using the catalog below. Help users choose commands, explain setup, and be clear about permissions. Do not claim to execute commands or access a Discord server from this chat. ${commandContext}`,
+      messages: await convertToModelMessages(body.messages),
+      maxOutputTokens: 500,
+    })
 
-  return result.toUIMessageStreamResponse()
+    return result.toUIMessageStreamResponse()
+  } catch (error) {
+    console.error('[v0] Ayra chat request failed:', error)
+    return Response.json({ error: 'Ayra is temporarily unavailable. Please try again.' }, { status: 503 })
+  }
 }
