@@ -1,5 +1,5 @@
 export const commandGroups = [
-  { name: 'Essentials', description: 'Core commands for everyday server management.', commands: ['help', 'support', 'prefix', 'config', 'ping', 'botinfo', 'uptime', 'invite'] },
+  { name: 'Essentials', description: 'Core commands for everyday server management.', commands: ['help', 'support', 'prefix', 'config', 'ping', 'stats', 'botinfo', 'uptime', 'invite'] },
   { name: 'Moderation', description: 'Keep conversations safe, clear, and organized.', commands: ['ban', 'unban', 'kick', 'mute', 'unmute', 'warn', 'warnings', 'clearwarnings', 'purge', 'slowmode', 'lock', 'unlock', 'lockdown', 'tempban', 'softban', 'massban', 'hackban', 'voicekick', 'nuke', 'modlog'] },
   { name: 'Server setup', description: 'Configure Ayra around the way your server works.', commands: ['setprefix', 'setautorole', 'setmodrole', 'language', 'announce', 'reportset', 'setchannel', 'mediaonly', 'reactionrole', 'nsfw', 'tag'] },
   { name: 'Community', description: 'Give members useful ways to participate.', commands: ['giveaway', 'ticket', 'afk', 'profile', 'userinfo', 'avatar', 'banner', 'nick', 'role', 'roleinfo', 'permissions', 'report', 'note', 'remind'] },
