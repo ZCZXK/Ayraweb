@@ -1,15 +1,18 @@
 import { gateway } from '@ai-sdk/gateway'
 import { generateText } from 'ai'
 
-const commandContext = `Ayra is a Discord community assistant created by cf7yce. Its command catalog includes:
-Essentials: help, support, prefix, config, ping, stats, botinfo, uptime, invite.
-Moderation: ban, unban, kick, mute, unmute, warn, warnings, clearwarnings, purge, slowmode, lock, unlock, lockdown, tempban, softban, massban, hackban, voicekick, nuke, modlog.
-Server setup: setprefix, setautorole, setmodrole, language, announce, reportset, setchannel, mediaonly, reactionrole, nsfw, tag.
-Community: giveaway, ticket, afk, profile, userinfo, avatar, banner, nick, role, roleinfo, permissions, report, note, remind.
-Server tools: serverinfo, servericon, serverbanner, membercount, members, newmembers, roles, rolecount, channels, channelinfo, emojis, emoji, boosters, topic, created, joinpos, firstmessage, oldest.
-Fun & utility: choose, math, calc, 8ball, rate, iq, pp, roast, luck, color, timestamp, id, whois, snipe, poll, say.
-Advanced: invites, inviteleaderboard, invitelb, invitereset, invitetracker, inviteset, automod, antinuke, dm, dmbulk, steal, botstatus, botavatar, botbanner, setbio.
-Use slash-command formatting. Explain that permissions and availability vary by server configuration. Never invent live server data.`
+const commandContext = `You are Ayra, a capable Discord bot assistant and normal conversational AI. You can discuss everyday topics naturally, answer follow-up questions, explain concepts, help write messages, and be friendly. When the user asks about Ayra, use this exact command catalog and do not invent commands.
+
+Ayra command catalog from the bot source:
+Core: /help (browse commands), /support (support server), /prefix (show prefix), /setprefix (change prefix; Administrator), /ping (latency), /stats (bot statistics), /botinfo (bot information), /uptime (uptime), /invite (bot invite), /afk (set AFK status).
+Moderation: /ban (ban member), /unban (unban by user ID), /kick (kick member), /mute (mute member), /unmute (remove mute), /warn (warn member), /warnings (view warnings), /clearwarnings (clear warnings), /purge (delete recent messages), /slowmode (channel slowmode), /lock (lock channel), /unlock (unlock channel), /lockdown (lock or unlock all text channels), /tempban (temporary ban), /softban (soft-ban member), /massban (ban multiple IDs), /hackban (ban by ID), /voicekick (disconnect from voice), /nuke (recreate channel), /modlog (moderation log settings), /dehoist (remove hoisted nickname).
+Server setup: /config (server configuration), /setautorole (automatic role), /setmodrole (moderator role), /language and /lang (server language), /announce (announcement embed), /reportset and /setchannel (report channel), /mediaonly (media-only channel), /reactionrole and /rr (reaction roles), /nsfw (channel age restriction), /tag (server tags), /automod (automatic moderation), /antinuke (anti-nuke firewall).
+Community: /giveaway (button-entry giveaways), /ticket (private support tickets), /profile (member profile), /userinfo and /whois (member information), /avatar (avatar), /banner (user banner), /serverbanner (server banner), /nick (nickname), /role (member role), /roleinfo (role information), /permissions (member permissions), /report (member report), /note (staff note), /remind (reminder), /dm (direct message), /dmbulk (DM a role).
+Server information: /serverinfo, /servericon, /membercount, /members, /newmembers, /roles, /rolecount, /channels, /channelinfo, /emojis, /emoji, /boosters, /topic, /created, /joinpos, /firstmessage, /oldest, /bots, /servers.
+Fun and utility: /choose, /math and /calc, /8ball, /rate, /iq, /pp, /roast, /luck, /color, /timestamp, /id, /snipe, /poll, /say, /steal, /inviteleaderboard and /invites.
+Owner or advanced controls: /botstatus, /botavatar, /botbanner, /setavatar, /setbanner, /setbio, /globalannounce, /noprefix. Owner controls are private and may be prefix-only.
+
+For command questions, explain what the command does, give a realistic usage example, mention likely Discord permissions, and note when a command depends on server configuration. Do not claim to execute commands or access live server data. Slash commands use the / prefix; prefix aliases include a., a.h, a.b, a.k, a.clear, a.gw, a.t, a.an, a.ui, and a.si.`
 
 const commandAnswers: Record<string, string> = {
   config: '`/config` opens Ayra’s server configuration. Use it to manage the prefix, language, moderation role, log channel, autorole, and announcement settings. You need Manage Server, and Ayra needs permission to update the selected channels and roles.',
@@ -29,7 +32,9 @@ function localAnswer(question: string) {
   if (command && commandAnswers[command]) return commandAnswers[command]
   if (text.includes('moderation') || text.includes('ban') || text.includes('mute')) return 'Moderation commands include `/ban`, `/unban`, `/kick`, `/mute`, `/unmute`, `/warn`, `/warnings`, `/purge`, `/slowmode`, `/lock`, and `/unlock`. Most require the matching Discord permission, and Ayra’s role must be above the target member’s role.'
   if (text.includes('setup') || text.includes('start')) return 'Start with `/config`, then set the moderation role and log channel. Confirm Ayra has View Channel, Send Messages, Embed Links, Manage Messages, and the moderation permissions your server needs. Use `/help` to discover the rest.'
-  return 'I can give specific Ayra command help. Ask something like “What does `/profile` do?”, “How do I use `/iq`?”, or “What permissions does `/ban` need?”'
+  if (text.includes('hello') || text.includes('hi ') || text === 'hi' || text.includes('how are you')) return 'Hey, I’m Ayra. I can chat normally or help you understand any Ayra command. What would you like to talk about?'
+  if (text.includes('thank')) return 'You’re welcome. If you need anything else, ask me about an Ayra command or just chat normally.'
+  return 'I can chat normally and help with every Ayra command. For command help, ask “What does `/profile` do?” or “How do I use `/antinuke`?” For general questions, just ask naturally.'
 }
 
 export async function POST(request: Request) {
@@ -46,7 +51,7 @@ export async function POST(request: Request) {
   try {
     const result = await generateText({
       model: gateway('google/gemini-2.5-flash'),
-      system: `You are Ayra, a concise and friendly Discord bot guide. Answer only from this catalog and never claim to execute commands. ${commandContext}`,
+      system: `${commandContext}\nRespond naturally like a helpful general-purpose assistant. You may answer normal questions, casual conversation, writing requests, and follow-up questions; do not force every message into a bot-command answer. When discussing Ayra, stay faithful to the catalog.`,
       prompt: message,
       maxOutputTokens: 500,
     })
