@@ -1,6 +1,7 @@
 'use client'
 
 import { useChat } from '@ai-sdk/react'
+import { DefaultChatTransport } from 'ai'
 import { Bot, ChevronRight, Loader2, RotateCcw, Send, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 
@@ -8,7 +9,9 @@ const suggestions = ['What does /config do?', 'Show moderation commands', 'How d
 
 export function AyraChat() {
   const [input, setInput] = useState('')
-  const { messages, sendMessage, status, error, setMessages } = useChat({ api: '/api/chat' })
+  const { messages, sendMessage, status, error, setMessages } = useChat({
+    transport: new DefaultChatTransport({ api: '/api/chat' }),
+  })
   const isLoading = status === 'submitted' || status === 'streaming'
 
   async function submit(value?: string) {
@@ -32,7 +35,7 @@ export function AyraChat() {
         {isLoading && <div className="flex items-center gap-2 text-xs text-muted-foreground"><Loader2 className="size-4 animate-spin text-primary" /> Ayra is thinking…</div>}
         {error && <p className="text-xs leading-5 text-destructive">Ayra could not respond right now. Please try again.</p>}
       </div>
-      <form onSubmit={(event) => { event.preventDefault(); if (!event.nativeEvent.isComposing && event.keyCode !== 229) void submit() }} className="flex gap-2 border-t border-border p-3 sm:p-4"><input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask about a command…" className="min-w-0 flex-1 bg-transparent px-2 text-sm outline-none placeholder:text-muted-foreground" aria-label="Ask Ayra a question" /><button type="submit" disabled={!input.trim() || isLoading} className="grid size-10 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40" aria-label="Send message"><Send className="size-4" /></button></form>
+      <form onSubmit={(event) => { event.preventDefault(); void submit() }} className="flex gap-2 border-t border-border p-3 sm:p-4"><input value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter' && !event.nativeEvent.isComposing && event.keyCode !== 229) { event.preventDefault(); void submit() } }} placeholder="Ask about a command…" className="min-w-0 flex-1 bg-transparent px-2 text-sm outline-none placeholder:text-muted-foreground" aria-label="Ask Ayra a question" /><button type="submit" disabled={!input.trim() || isLoading} className="grid size-10 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40" aria-label="Send message"><Send className="size-4" /></button></form>
     </div>
   )
 }
