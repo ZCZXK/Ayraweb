@@ -1,8 +1,5 @@
 import { gateway } from '@ai-sdk/gateway'
 import { convertToModelMessages, streamText, type UIMessage } from 'ai'
-import { auth } from '@/lib/auth'
-import { headers } from 'next/headers'
-
 const commandContext = `Ayra is a Discord community assistant created by cf7yce. Its command catalog includes:
 Essentials: help, support, prefix, config, ping, stats, botinfo, uptime, invite.
 Moderation: ban, unban, kick, mute, unmute, warn, warnings, clearwarnings, purge, slowmode, lock, unlock, lockdown, tempban, softban, massban, hackban, voicekick, nuke, modlog.
@@ -13,11 +10,10 @@ Fun & utility: choose, math, calc, 8ball, rate, iq, pp, roast, luck, color, time
 Advanced: invites, inviteleaderboard, invitelb, invitereset, invitetracker, inviteset, automod, antinuke, dm, dmbulk, steal, botstatus, botavatar, botbanner, setbio.
 Use slash-command formatting in replies. Explain that exact permissions and availability can vary by server configuration. Never invent live member or server counts; the website does not have a bot telemetry endpoint.`
 
+export const maxDuration = 30
+
 export async function POST(request: Request) {
   try {
-    const session = await auth.api.getSession({ headers: await headers() })
-    if (!session?.user) return new Response('Unauthorized', { status: 401 })
-
     const body = (await request.json()) as { messages?: UIMessage[] }
     if (!Array.isArray(body.messages)) return new Response('Invalid messages', { status: 400 })
 
