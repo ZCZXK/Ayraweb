@@ -23,10 +23,11 @@ export function PortalShell({ children, active, userName, userImage }: { childre
         <div className="hidden items-center gap-3 md:flex"><div className="flex items-center gap-2 text-right"><div><p className="max-w-28 truncate text-xs font-medium">{userName}</p><p className="text-[10px] text-muted-foreground">Member</p></div>{userImage ? <img src={userImage} alt={`${userName}'s avatar`} className="size-8 rounded-full object-cover ring-2 ring-primary/20" /> : <span className="grid size-8 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{userName.slice(0, 1).toUpperCase()}</span>}</div></div>
         <button type="button" className="rounded-lg border border-border p-2 md:hidden" aria-label="Toggle navigation" onClick={() => setOpen(!open)}>{open ? <X className="size-5" /> : <Menu className="size-5" />}</button>
       </div>
-      {open && <nav className="border-t border-border bg-card px-4 py-3 md:hidden" aria-label="Mobile portal navigation">{navigation.map(({ href, label, icon: Icon }) => <a key={href} href={href} onClick={() => setOpen(false)} className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm ${active === href ? 'bg-primary/10 font-semibold text-primary' : 'text-muted-foreground'}`}><Icon className="size-4" />{label}</a>)}</nav>}
+      {open && <nav className="border-t border-border bg-card px-3 py-3 md:hidden" aria-label="Mobile portal navigation">{navigation.map(({ href, label, icon: Icon }) => <a key={href} href={href} onClick={() => setOpen(false)} className={`flex min-h-12 items-center gap-3 rounded-xl px-3 text-sm ${active === href ? 'bg-primary/10 font-semibold text-primary' : 'text-muted-foreground'}`}><Icon className="size-5" />{label}</a>)}</nav>}
+    <nav className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-4 rounded-2xl border border-border/80 bg-card/95 p-1.5 shadow-2xl backdrop-blur-xl md:hidden" aria-label="Quick navigation">{navigation.map(({ href, label, icon: Icon }) => <a key={href} href={href} className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl text-[10px] font-medium ${active === href ? 'bg-primary/15 text-primary' : 'text-muted-foreground'}`}><Icon className="size-4" /><span>{label}</span></a>)}</nav>
     </header>
     <div className="pointer-events-none fixed inset-0 -z-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:linear-gradient(to_bottom,black,transparent_75%)]" />
-    <main className="relative z-10">{children}</main>
+    <main className="relative z-10 pb-24 md:pb-0">{children}</main>
   </div>
 }
 
