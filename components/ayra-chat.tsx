@@ -4,7 +4,7 @@ import { Bot, ChevronRight, Loader2, RotateCcw, Send, Sparkles } from 'lucide-re
 import { useState } from 'react'
 
 type ChatMessage = { id: string; role: 'user' | 'assistant'; text: string }
-const suggestions = ['What does /config do?', 'Show moderation commands', 'How do I set up Ayra?']
+const suggestions = ['What does /profile do?', 'How do I use /iq?', 'What permissions does /ban need?']
 
 export function AyraChat() {
   const [input, setInput] = useState('')

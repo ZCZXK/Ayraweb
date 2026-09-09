@@ -11,12 +11,25 @@ Fun & utility: choose, math, calc, 8ball, rate, iq, pp, roast, luck, color, time
 Advanced: invites, inviteleaderboard, invitelb, invitereset, invitetracker, inviteset, automod, antinuke, dm, dmbulk, steal, botstatus, botavatar, botbanner, setbio.
 Use slash-command formatting. Explain that permissions and availability vary by server configuration. Never invent live server data.`
 
+const commandAnswers: Record<string, string> = {
+  config: '`/config` opens Ayra’s server configuration. Use it to manage the prefix, language, moderation role, log channel, autorole, and announcement settings. You need Manage Server, and Ayra needs permission to update the selected channels and roles.',
+  profile: '`/profile [user]` shows a member’s public Ayra profile. If no user is provided, it shows your own profile. It is a community command, so it should not require moderation permissions.',
+  iq: '`/iq [user]` runs the IQ fun command for you or the selected member. It is only entertainment and does not measure real intelligence. Try `/iq @username`.',
+  help: '`/help` lists available commands, usually grouped by category. Use `/help <command>` when supported for focused usage details. Commands can be hidden or unavailable depending on the server configuration and your permissions.',
+  ping: '`/ping` checks whether Ayra is online and reports its response latency. It does not test Discord voice or your internet connection.',
+  prefix: '`/prefix` shows the server prefix or lets an authorized moderator change it. Newer Ayra commands use slash-command formatting, such as `/help` and `/config`.',
+  support: '`/support` gives the Ayra support link or support-server information. Use it for bug reports, account issues, or questions that require the bot owner.',
+  avatar: '`/avatar [user]` displays the selected member’s Discord avatar. Without a user, it displays your own avatar.',
+  userinfo: '`/userinfo [user]` displays basic Discord information about a member, such as their ID, account dates, roles, and join details when available.',
+}
+
 function localAnswer(question: string) {
-  const text = question.toLowerCase()
-  if (text.includes('config') || text.includes('setup')) return 'Use `/config` to view or update Ayra server settings. Start with the prefix, moderation role, log channel, and language. Ayra also needs the permissions required by the commands you enable.'
-  if (text.includes('moderation') || text.includes('ban') || text.includes('mute')) return 'Moderation commands include `/ban`, `/unban`, `/kick`, `/mute`, `/unmute`, `/warn`, `/purge`, `/slowmode`, `/lock`, and `/unlock`. Availability depends on your permissions and server configuration.'
-  if (text.includes('help') || text.includes('command')) return 'Use `/help` to browse commands. Essentials include `/config`, `/support`, `/prefix`, `/ping`, `/stats`, `/botinfo`, `/uptime`, and `/invite`. Ask me about any command for more details.'
-  return 'I can explain Ayra commands, server setup, moderation, tickets, giveaways, and utility tools. Try asking about `/config`, `/help`, or moderation commands.'
+  const text = question.toLowerCase().replace(/\s+/g, ' ')
+  const command = text.match(/\/(\w+)/)?.[1] ?? Object.keys(commandAnswers).find((name) => new RegExp(`\\b${name}\\b`).test(text))
+  if (command && commandAnswers[command]) return commandAnswers[command]
+  if (text.includes('moderation') || text.includes('ban') || text.includes('mute')) return 'Moderation commands include `/ban`, `/unban`, `/kick`, `/mute`, `/unmute`, `/warn`, `/warnings`, `/purge`, `/slowmode`, `/lock`, and `/unlock`. Most require the matching Discord permission, and Ayra’s role must be above the target member’s role.'
+  if (text.includes('setup') || text.includes('start')) return 'Start with `/config`, then set the moderation role and log channel. Confirm Ayra has View Channel, Send Messages, Embed Links, Manage Messages, and the moderation permissions your server needs. Use `/help` to discover the rest.'
+  return 'I can give specific Ayra command help. Ask something like “What does `/profile` do?”, “How do I use `/iq`?”, or “What permissions does `/ban` need?”'
 }
 
 export async function POST(request: Request) {
