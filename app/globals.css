@@ -62,8 +62,8 @@
   --accent: oklch(0.25 0.04 262);
   --accent-foreground: oklch(0.96 0.012 255);
   --destructive: oklch(0.64 0.2 25);
-  --border: oklch(0.34 0.035 262);
-  --input: oklch(0.34 0.035 262);
+  --border: oklch(0.29 0.035 262);
+  --input: oklch(0.29 0.035 262);
   --ring: oklch(0.67 0.16 265);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
@@ -157,7 +157,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+    min-width: 320px;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 30%, transparent);
   }
 }

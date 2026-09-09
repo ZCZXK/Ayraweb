@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Ayra — Make your server feel alive',
-  description: 'Ayra is your all-in-one Discord companion for better communities, smarter moderation, and more fun.',
+  title: 'Ayra — Discord moderation, simplified',
+  description: 'Ayra is a focused Discord assistant for reliable moderation, community tools, and calmer servers.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -28,8 +28,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
+    { media: '(prefers-color-scheme: light)', color: '#f7f9ff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b1020' },
   ],
 }
 
