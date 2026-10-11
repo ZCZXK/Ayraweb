@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Headphones, LogIn, Music2, Pause, Play, Volume2 } from 'lucide-react'
 import { signIn } from '@/lib/auth-client'
 
@@ -26,4 +26,11 @@ export default function LandingExperience() {
   </main>
 }
 
-function MusicPanel({ playing, onToggle }: { playing: boolean; onToggle: () => void }) { return <aside className="fixed inset-x-4 bottom-4 z-20 mx-auto flex max-w-xl items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-3 shadow-2xl backdrop-blur-xl sm:inset-x-auto sm:bottom-6"><span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/10 text-slate-300"><Music2 className="size-5" /></span><div className="min-w-0 flex-1 text-left"><p className="truncate text-sm font-medium text-slate-200">I WANNA BE YOURS</p><p className="text-xs text-slate-500">Music panel · paused by default</p></div><button onClick={onToggle} className="grid size-10 shrink-0 place-items-center rounded-xl bg-white/10 text-slate-300 transition hover:bg-white/15" aria-label={playing ? 'Pause music' : 'Play music'}>{playing ? <Pause className="size-4" /> : <Play className="size-4" />}</button><Volume2 className="hidden size-4 text-slate-600 sm:block" /><Headphones className="hidden size-4 text-slate-600 sm:block" /></aside> }
+function MusicPanel({ playing, onToggle }: { playing: boolean; onToggle: () => void }) {
+  const playerRef = useRef<HTMLIFrameElement>(null)
+  const sendCommand = (command: 'playVideo' | 'pauseVideo') => playerRef.current?.contentWindow?.postMessage(JSON.stringify({ event: 'command', func: command, args: [] }), 'https://www.youtube-nocookie.com')
+  useEffect(() => { sendCommand(playing ? 'playVideo' : 'pauseVideo') }, [playing])
+  return <aside className="fixed inset-x-4 bottom-4 z-20 mx-auto flex max-w-xl items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-3 shadow-2xl backdrop-blur-xl sm:inset-x-auto sm:bottom-6">
+    <iframe ref={playerRef} title="I Wanna Be Yours music player" src="https://www.youtube-nocookie.com/embed/nyuo9-OjNNg?enablejsapi=1&controls=0&loop=1&playlist=nyuo9-OjNNg&playsinline=1&rel=0" className="pointer-events-none absolute size-0 opacity-0" allow="autoplay; encrypted-media" />
+    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/10 text-slate-300"><Music2 className="size-5" /></span><div className="min-w-0 flex-1 text-left"><p className="truncate text-sm font-medium text-slate-200">I WANNA BE YOURS</p><p className="text-xs text-slate-500">Arctic Monkeys · YouTube</p></div><button onClick={onToggle} className="grid size-10 shrink-0 place-items-center rounded-xl bg-white/10 text-slate-300 transition hover:bg-white/15" aria-label={playing ? 'Pause music' : 'Play music'}>{playing ? <Pause className="size-4" /> : <Play className="size-4" />}</button><Volume2 className="hidden size-4 text-slate-600 sm:block" /><Headphones className="hidden size-4 text-slate-600 sm:block" /></aside>
+}
