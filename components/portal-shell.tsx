@@ -1,14 +1,13 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Bot, BookOpen, ExternalLink, LayoutDashboard, Menu, UserRound, X, MessageSquare } from 'lucide-react'
+import { Bot, BookOpen, ExternalLink, LayoutDashboard, Menu, UserRound, X } from 'lucide-react'
 import { useState } from 'react'
 
 const iconUrl = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/icon-I4IuZkcMvLdncAGMhjRGHiGnRSmjKW.png'
 
 const navigation = [
   { href: '/', label: 'Overview', icon: LayoutDashboard },
-  { href: '/ai', label: 'Ask Ayra', icon: MessageSquare },
   { href: '/commands', label: 'Commands', icon: BookOpen },
   { href: '/profile', label: 'Profile', icon: UserRound },
 ]
@@ -20,7 +19,7 @@ export function PortalShell({ children, active, userName, userImage }: { childre
       <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <a href="/" className="flex items-center gap-2.5" aria-label="Ayra overview"><img src={iconUrl} alt="Ayra logo" className="size-9 rounded-xl object-cover ring-1 ring-white/10" /><span className="font-mono text-lg font-bold tracking-tight">ayra<span className="text-primary">.</span></span></a>
         <nav className="hidden items-center gap-1 md:flex" aria-label="Portal navigation">{navigation.map(({ href, label, icon: Icon }) => <a key={href} href={href} className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors ${active === href ? 'bg-primary/10 font-semibold text-primary' : 'text-muted-foreground hover:bg-secondary hover:text-foreground'}`}><Icon className="size-4" />{label}</a>)}</nav>
-        <div className="hidden items-center gap-3 md:flex"><div className="flex items-center gap-2 text-right"><div><p className="max-w-28 truncate text-xs font-medium">{userName}</p><p className="text-[10px] text-muted-foreground">Member</p></div>{userImage ? <img src={userImage} alt={`${userName}'s avatar`} className="size-8 rounded-full object-cover ring-2 ring-primary/20" /> : <span className="grid size-8 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{userName.slice(0, 1).toUpperCase()}</span>}</div></div>
+        <div className="hidden items-center gap-3 md:flex"><div className="flex items-center gap-2 text-right"><div><p className="max-w-28 truncate text-xs font-medium">{userName}</p><p className="text-[10px] text-muted-foreground">Owner</p></div>{userImage ? <img src={userImage} alt={`${userName}'s avatar`} className="size-8 rounded-full object-cover ring-2 ring-primary/20" /> : <span className="grid size-8 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{userName.slice(0, 1).toUpperCase()}</span>}</div></div>
         <button type="button" className="grid size-11 shrink-0 place-items-center rounded-xl border border-border bg-card text-foreground shadow-sm transition-colors hover:border-primary/50 md:hidden" aria-label="Toggle navigation" onClick={() => setOpen(!open)}>{open ? <X className="size-5" /> : <Menu className="size-5" />}</button>
       </div>
       {open && <nav className="border-t border-border bg-card px-3 py-3 md:hidden" aria-label="Mobile portal navigation">{navigation.map(({ href, label, icon: Icon }) => <a key={href} href={href} onClick={() => setOpen(false)} className={`flex min-h-12 items-center gap-3 rounded-xl px-3 text-sm ${active === href ? 'bg-primary/10 font-semibold text-primary' : 'text-muted-foreground'}`}><Icon className="size-5" />{label}</a>)}</nav>}
