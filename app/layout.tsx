@@ -4,7 +4,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'ayrabot.fun — Coming Soon',
-  description: 'Something awesome is coming soon...',
+  description: 'A new signal is forming. Something beautiful is coming.',
   generator: 'v0.app',
   icons: {
     icon: [

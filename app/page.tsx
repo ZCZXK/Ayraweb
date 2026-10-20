@@ -1,21 +1,39 @@
+import { ArrowUpRight, Disc3 } from 'lucide-react'
+
+const songUrl = 'https://youtu.be/nyuo9-OjNNg?si=ocpDo5W4T4d32_uS'
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#0a0a0a] px-6 pb-28 text-center text-white">
-      <section>
-        <p className="text-lg text-neutral-400 sm:text-xl">Something awesome is coming soon...</p>
-      </section>
-      <div className="fixed inset-x-4 bottom-4 mx-auto flex max-w-xl items-center gap-3 rounded-2xl border border-white/10 bg-neutral-950 p-3 text-left shadow-2xl shadow-black/50">
-        <iframe
-          title="I Wanna Be Yours by Arctic Monkeys"
-          src="https://www.youtube-nocookie.com/embed/nyuo9-OjNNg?autoplay=1&controls=1&loop=1&playlist=nyuo9-OjNNg&playsinline=1&rel=0"
-          className="size-16 shrink-0 rounded-lg border-0"
-          allow="autoplay; encrypted-media"
-        />
-        <div className="min-w-0">
-          <p className="truncate text-sm font-medium text-white">I WANNA BE YOURS</p>
-          <p className="text-xs text-neutral-500">Arctic Monkeys</p>
-        </div>
+    <main className="relative flex min-h-screen overflow-hidden bg-black text-white">
+      <div className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-6 sm:px-10">
+        <header className="flex items-center justify-between border-b border-white/10 pb-5 font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">
+          <span>AYRA</span>
+          <span>EST. 2026</span>
+        </header>
+
+        <section className="flex flex-1 flex-col justify-center py-24">
+          <p className="mb-8 font-mono text-xs uppercase tracking-[0.32em] text-white/40">A new signal is forming</p>
+          <h1 className="max-w-4xl text-[clamp(4rem,14vw,11rem)] font-semibold leading-[0.82] tracking-[-0.09em] text-white">
+            Something<br /><span className="text-white/35">beautiful</span><br />is coming.
+          </h1>
+          <div className="mt-12 flex max-w-md items-start justify-between gap-8 border-t border-white/10 pt-5 text-sm leading-6 text-white/50">
+            <p>We are building a quieter, sharper place for what comes next.</p>
+            <ArrowUpRight className="mt-1 size-4 shrink-0 text-white/70" />
+          </div>
+        </section>
+
+        <footer className="flex items-end justify-between border-t border-white/10 pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/35">
+          <span>AYRA / PRIVATE BUILD</span>
+          <span className="hidden sm:inline">COMING SOON</span>
+        </footer>
       </div>
+
+      <a href={songUrl} target="_blank" rel="noreferrer" className="fixed inset-x-4 bottom-4 z-20 mx-auto flex max-w-sm items-center gap-3 rounded-2xl border border-white/10 bg-[#0d0d0d]/95 p-3 shadow-2xl shadow-black/60 backdrop-blur-xl transition hover:border-white/25 sm:inset-x-auto sm:right-6 sm:left-auto sm:bottom-6">
+        <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white text-black"><Disc3 className="size-5" /></span>
+        <span className="min-w-0 flex-1"><strong className="block truncate text-sm font-medium">I WANNA BE YOURS</strong><span className="block text-xs text-white/40">Tap to listen</span></span>
+        <ArrowUpRight className="size-4 shrink-0 text-white/45" />
+      </a>
     </main>
   )
 }
