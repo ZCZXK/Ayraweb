@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Ayra — Discord moderation, simplified',
-  description: 'Ayra is a focused Discord assistant for reliable moderation, community tools, and calmer servers.',
+  title: 'ayrabot.fun — Coming Soon',
+  description: 'Something awesome is coming soon...',
   generator: 'v0.app',
   icons: {
     icon: [

@@ -165,7 +165,7 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black text-white;
     min-width: 320px;
   }
   ::selection {

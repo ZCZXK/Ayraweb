@@ -1,14 +1,10 @@
-import { auth } from '@/lib/auth'
-import { db } from '@/lib/db'
-import { discordGuild } from '@/lib/db/schema'
-import { eq } from 'drizzle-orm'
-import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
-import ServerDashboard from '@/components/server-dashboard'
-
-export default async function Home() {
-  const session = await auth.api.getSession({ headers: await headers() })
-  if (!session?.user) redirect('/sign-in')
-  const guilds = await db.select({ id: discordGuild.id, name: discordGuild.name, memberCount: discordGuild.memberCount }).from(discordGuild).where(eq(discordGuild.userId, session.user.id))
-  return <ServerDashboard userName={session.user.name} userImage={session.user.image ?? undefined} guilds={guilds} />
+export default function Home() {
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-[#0a0a0a] px-6 text-center text-white">
+      <section>
+        <h1 className="text-5xl font-bold tracking-tight sm:text-7xl">ayrabot.fun</h1>
+        <p className="mt-4 text-lg text-neutral-400 sm:text-xl">Something awesome is coming soon...</p>
+      </section>
+    </main>
+  )
 }
