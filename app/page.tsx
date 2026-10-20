@@ -1,6 +1,4 @@
-import { ArrowUpRight, Disc3 } from 'lucide-react'
-
-const songUrl = 'https://youtu.be/nyuo9-OjNNg?si=ocpDo5W4T4d32_uS'
+import { ArrowUpRight } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -29,11 +27,10 @@ export default function Home() {
         </footer>
       </div>
 
-      <a href={songUrl} target="_blank" rel="noreferrer" className="fixed inset-x-4 bottom-4 z-20 mx-auto flex max-w-sm items-center gap-3 rounded-2xl border border-white/10 bg-[#0d0d0d]/95 p-3 shadow-2xl shadow-black/60 backdrop-blur-xl transition hover:border-white/25 sm:inset-x-auto sm:right-6 sm:left-auto sm:bottom-6">
-        <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white text-black"><Disc3 className="size-5" /></span>
-        <span className="min-w-0 flex-1"><strong className="block truncate text-sm font-medium">I WANNA BE YOURS</strong><span className="block text-xs text-white/40">Tap to listen</span></span>
-        <ArrowUpRight className="size-4 shrink-0 text-white/45" />
-      </a>
+      <div className="fixed inset-x-4 bottom-4 z-20 mx-auto flex max-w-sm items-center gap-3 rounded-2xl border border-white/10 bg-[#0d0d0d]/95 p-2 shadow-2xl shadow-black/60 backdrop-blur-xl sm:inset-x-auto sm:right-6 sm:left-auto sm:bottom-6">
+        <iframe title="I Wanna Be Yours" src="https://www.youtube-nocookie.com/embed/nyuo9-OjNNg?controls=1&playsinline=1&rel=0" className="h-16 w-28 shrink-0 rounded-xl border-0" allow="encrypted-media" />
+        <span className="min-w-0"><strong className="block truncate text-sm font-medium">I WANNA BE YOURS</strong><span className="block text-xs text-white/40">Now playing</span></span>
+      </div>
     </main>
   )
 }
