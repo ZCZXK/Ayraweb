@@ -169,6 +169,21 @@
     min-width: 320px;
     font-feature-settings: "ss01" 1, "cv11" 1;
   }
+
+  :root {
+    --music-surface: 0 0% 7%;
+    --music-line: 0 0% 100% / 0.12;
+    --music-glow: 0 0% 100% / 0.16;
+  }
+
+@keyframes music-pulse {
+  0%, 100% { transform: scaleY(.55); opacity: .5; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+.music-bars span { transform-origin: bottom; animation: music-pulse 1s ease-in-out infinite; }
+.music-bars span:nth-child(2n) { animation-delay: -.35s; }
+.music-bars span:nth-child(3n) { animation-delay: -.65s; }
+@media (prefers-reduced-motion: reduce) { .music-bars span { animation: none; } }
   ::selection {
     background: color-mix(in oklab, var(--primary) 30%, transparent);
   }
