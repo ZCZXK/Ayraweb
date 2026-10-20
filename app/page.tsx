@@ -27,9 +27,8 @@ export default function Home() {
         </footer>
       </div>
 
-      <div className="fixed inset-x-4 bottom-4 z-20 mx-auto flex max-w-sm items-center gap-3 rounded-2xl border border-white/10 bg-[#0d0d0d]/95 p-2 shadow-2xl shadow-black/60 backdrop-blur-xl sm:inset-x-auto sm:right-6 sm:left-auto sm:bottom-6">
-        <iframe title="I Wanna Be Yours" src="https://www.youtube-nocookie.com/embed/nyuo9-OjNNg?controls=1&playsinline=1&rel=0" className="h-16 w-28 shrink-0 rounded-xl border-0" allow="encrypted-media" />
-        <span className="min-w-0"><strong className="block truncate text-sm font-medium">I WANNA BE YOURS</strong><span className="block text-xs text-white/40">Now playing</span></span>
+      <div className="fixed bottom-4 left-1/2 z-20 w-[calc(100%-2rem)] max-w-xs -translate-x-1/2 overflow-hidden rounded-xl border border-white/10 bg-[#0d0d0d] shadow-2xl shadow-black/60 sm:bottom-6">
+        <iframe title="I Wanna Be Yours" src="https://www.youtube-nocookie.com/embed/nyuo9-OjNNg?controls=1&playsinline=1&rel=0" className="block h-20 w-full border-0" allow="encrypted-media" />
       </div>
     </main>
   )
