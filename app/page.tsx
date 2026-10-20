@@ -28,11 +28,11 @@ export default function Home() {
       </div>
 
       <div className="fixed bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/90 p-2 pr-5 shadow-2xl shadow-black/60 backdrop-blur sm:bottom-6">
-        <iframe ref={playerRef} title="I Wanna Be Yours audio" src="https://www.youtube-nocookie.com/embed/nyuo9-OjNNg?enablejsapi=1&controls=0&playsinline=1&rel=0" className="pointer-events-none absolute size-px opacity-0" allow="autoplay; encrypted-media" />
+        <iframe ref={playerRef} title="I Wanna Be Yours audio" src="https://www.youtube-nocookie.com/embed/nyuo9-OjNNg?enablejsapi=1&controls=0&playsinline=1&rel=0&playlist=nyuo9-OjNNg,dX3k_QDnzHE" className="pointer-events-none absolute size-px opacity-0" allow="autoplay; encrypted-media" />
         <button type="button" onClick={() => setPlaying((value) => !value)} aria-label={playing ? 'Pause I Wanna Be Yours' : 'Play I Wanna Be Yours'} className={`grid size-14 shrink-0 place-items-center rounded-full border border-white/20 bg-white text-black shadow-[0_0_30px_rgba(255,255,255,0.14)] transition hover:scale-105 ${playing ? 'animate-[spin_5s_linear_infinite]' : ''}`}>
           {playing ? <Pause className="size-5" fill="currentColor" /> : <Play className="ml-1 size-5" fill="currentColor" />}
         </button>
-        <div className="min-w-0 text-left"><p className="whitespace-nowrap text-sm font-medium text-white">I WANNA BE YOURS</p><p className="text-xs text-white/40">Arctic Monkeys</p></div>
+        <div className="min-w-0 text-left"><p className="whitespace-nowrap text-sm font-medium text-white">I WANNA BE YOURS</p><p className="text-xs text-white/40">Arctic Monkeys · Next track queued</p></div>
       </div>
     </main>
   )
