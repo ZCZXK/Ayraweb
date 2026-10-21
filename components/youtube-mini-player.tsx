@@ -147,6 +147,7 @@ const YouTubePlayerHost = memo(function YouTubePlayerHost({ onReady, onPlaybackU
 
 export function YouTubeMiniPlayer() {
   const playerRef = useRef<YouTubePlayer | null>(null)
+  const [showPlayer, setShowPlayer] = useState(false)
   const [isReady, setIsReady] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [unavailable, setUnavailable] = useState(false)
@@ -159,6 +160,10 @@ export function YouTubeMiniPlayer() {
   const handleUnavailable = useCallback(() => setUnavailable(true), [])
 
   function togglePlayback() {
+    if (!showPlayer) {
+      setShowPlayer(true)
+      return
+    }
     const player = playerRef.current
     if (!player) return
     if (player.getPlayerState() === 1) player.pauseVideo()
@@ -172,8 +177,8 @@ export function YouTubeMiniPlayer() {
           className="music-play-button"
           type="button"
           onClick={togglePlayback}
-          disabled={!isReady || unavailable}
-          aria-label={isPlaying ? 'Pause I Wanna Be Yours' : 'Play I Wanna Be Yours'}
+          disabled={showPlayer && (!isReady || unavailable)}
+          aria-label={!showPlayer ? 'Show the YouTube player for I Wanna Be Yours' : isPlaying ? 'Pause I Wanna Be Yours' : 'Play I Wanna Be Yours'}
         >
           <span className="music-record" aria-hidden="true"><span className="music-record-center" /></span>
           <svg className="music-control-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -185,9 +190,9 @@ export function YouTubeMiniPlayer() {
           <span>Arctic Monkeys</span>
           {unavailable && <span className="music-track-error" role="status">YouTube unavailable</span>}
         </div>
-        <div className="music-player-embed">
+        {showPlayer && <div className="music-player-embed">
           <YouTubePlayerHost onReady={handleReady} onPlaybackUpdate={handlePlaybackUpdate} onUnavailable={handleUnavailable} />
-        </div>
+        </div>}
       </div>
     </div>
   )

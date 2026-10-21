@@ -2,7 +2,7 @@
 
 A minimalist aurora landing page for Ayra with the bot icon supplied by the project owner, glass-style actions, and concise links to the bot’s legal pages.
 
-The homepage embeds the YouTube music video [“I Wanna Be Yours” by Arctic Monkeys](https://www.youtube.com/watch?v=nyuo9-OjNNg) using YouTube’s IFrame Player API.
+The homepage offers one track, [“I Wanna Be Yours” by Arctic Monkeys](https://www.youtube.com/watch?v=nyuo9-OjNNg). Its YouTube player opens only when selected, so the video preview is not shown by default.
 
 ## Run locally
 

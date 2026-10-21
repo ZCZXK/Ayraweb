@@ -4,25 +4,14 @@ import { YouTubeMiniPlayer } from '../components/youtube-mini-player'
 import { OwnerCard } from '../components/owner-card'
 import { CommandSearch } from '../components/command-search'
 import { ParticleField } from '../components/particle-field'
+import { allCommands } from '../data/command-catalog'
 
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
 const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
 const SUPPORT_EMAIL = 'support@ayrabot.fun'
 
-const features = [
-  { id: '01', icon: 'shield', title: 'Moderation', commands: ['/warn', '/mute', '/ban', '/slowmode'] },
-  { id: '02', icon: 'ticket', title: 'Tickets', commands: ['/ticket', '/report'] },
-  { id: '03', icon: 'grid', title: 'Server tools', commands: ['/serverinfo', '/membercount', '/roles'] },
-  { id: '04', icon: 'spark', title: 'Community', commands: ['/giveaway', '/poll', '/remind'] },
-]
-const searchableCommands = features.flatMap((feature) => feature.commands.map((name) => ({ name, category: feature.title })))
-
 function Icon({ name, className = '' }: { name: string; className?: string }) {
   const common = { className, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true as const }
-  if (name === 'shield') return <svg {...common}><path d="M12 3.25 19 6v5.3c0 4.35-2.9 7.65-7 9.45-4.1-1.8-7-5.1-7-9.45V6l7-2.75Z"/><path d="m9 12 2 2 4-4"/></svg>
-  if (name === 'ticket') return <svg {...common}><path d="M4 7.25A2.25 2.25 0 0 1 6.25 5h11.5A2.25 2.25 0 0 1 20 7.25v2a2.75 2.75 0 0 0 0 5.5v2A2.25 2.25 0 0 1 17.75 19H6.25A2.25 2.25 0 0 1 4 16.75v-2a2.75 2.75 0 0 0 0-5.5v-2Z"/><path d="M9 8.5v1M9 12v1M9 15.5v.01"/></svg>
-  if (name === 'grid') return <svg {...common}><rect x="4" y="4" width="6" height="6" rx="1.3"/><rect x="14" y="4" width="6" height="6" rx="1.3"/><rect x="4" y="14" width="6" height="6" rx="1.3"/><rect x="14" y="14" width="6" height="6" rx="1.3"/></svg>
-  if (name === 'spark') return <svg {...common}><path d="M12 3.5 14 9l5.5 2-5.5 2-2 5.5L10 13l-5.5-2L10 9l2-5.5Z"/><path d="m19 15 .85 2.15L22 18l-2.15.85L19 21l-.85-2.15L16 18l2.15-.85L19 15Z"/></svg>
   if (name === 'arrow') return <svg {...common}><path d="M7 17 17 7M8 7h9v9"/></svg>
   if (name === 'discord') return <svg {...common}><path d="M7 7.2a14 14 0 0 1 3-.9l.45.9a11 11 0 0 1 3.1 0l.45-.9a14 14 0 0 1 3 .9c1.8 2.6 2.55 5.15 2.3 7.65a12 12 0 0 1-3.65 1.85l-.8-1.3c.5-.18.98-.42 1.42-.7-2.75 1.28-5.82 1.28-8.55 0 .44.28.91.52 1.42.7l-.8 1.3a12 12 0 0 1-3.65-1.85C4.95 12.35 5.7 9.8 7 7.2Z"/><path d="M9 12h.01M15 12h.01" strokeWidth="2.4"/></svg>
   if (name === 'mail') return <svg {...common}><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4.5 7 7.5 5.5L19.5 7"/></svg>
@@ -41,7 +30,7 @@ export default function Home() {
           <span className="brand-name">AYRA<span className="brand-period">.</span></span>
         </a>
         <nav className="main-nav" aria-label="Main navigation">
-          <a href="#features">Features</a><a href="#reviews">Reviews</a><a href="#support">Support</a>
+          <a href="#commands">Commands</a><a href="#reviews">Reviews</a><a href="#support">Support</a>
         </nav>
         <a className="glass-button glass-button--small" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
       </header>
@@ -64,17 +53,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section features-section" id="features" aria-labelledby="features-title">
-        <div className="section-heading" data-reveal="up"><div><p className="eyebrow"><span className="eyebrow-line" /> Ayra</p><h2 id="features-title">Features</h2></div><CommandSearch commands={searchableCommands} /></div>
-        <div className="feature-grid">
-          {features.map((feature, index) => (
-            <article className="feature-card glass-panel" key={feature.id} data-reveal="up" data-reveal-delay={String(index * 85)}>
-              <div className="feature-topline"><span className="feature-index">{feature.id}</span><Icon name={feature.icon} className="feature-icon" /></div>
-              <h3>{feature.title}</h3>
-              <div className="command-list" aria-label={`${feature.title} commands`}>{feature.commands.map((command) => <code key={command}>{command}</code>)}</div>
-            </article>
-          ))}
-        </div>
+      <section className="section commands-section" id="commands" aria-labelledby="commands-title">
+        <div className="section-heading" data-reveal="up"><div><p className="eyebrow"><span className="eyebrow-line" /> Ayra</p><h2 id="commands-title">Commands</h2></div></div>
+        <CommandSearch commands={allCommands} />
       </section>
 
       <section className="section reviews-section" id="reviews" aria-labelledby="reviews-title" data-reveal="up">

@@ -9,9 +9,18 @@ export function CommandSearch({ commands }: { commands: SearchCommand[] }) {
   const [copied, setCopied] = useState('')
   const [message, setMessage] = useState('')
   const normalizedQuery = query.trim().toLowerCase()
-  const matches = useMemo(() => {
-    if (!normalizedQuery) return []
-    return commands.filter(({ name, category }) => `${name} ${category}`.toLowerCase().includes(normalizedQuery))
+
+  const groups = useMemo(() => {
+    const filtered = normalizedQuery
+      ? commands.filter(({ name, category }) => `${name} ${category}`.toLowerCase().includes(normalizedQuery))
+      : commands
+    const grouped = new Map<string, string[]>()
+    for (const { name, category } of filtered) {
+      const entries = grouped.get(category) ?? []
+      entries.push(name)
+      grouped.set(category, entries)
+    }
+    return Array.from(grouped, ([category, names]) => ({ category, names }))
   }, [commands, normalizedQuery])
 
   async function copyCommand(name: string) {
@@ -42,23 +51,28 @@ export function CommandSearch({ commands }: { commands: SearchCommand[] }) {
           spellCheck={false}
         />
       </label>
-      {normalizedQuery && (
-        <div className="command-results" aria-label="Matching commands">
-          {matches.length ? matches.map(({ name, category }) => (
-            <button
-              className="command-result"
-              key={name}
-              type="button"
-              onClick={() => copyCommand(name)}
-              aria-label={copied === name ? `Copied ${name}` : `Copy ${name}`}
-            >
-              <code>{name}</code>
-              <span className="command-result-category">{category}</span>
-              <span className="command-copy-label">{copied === name ? 'Copied' : 'Copy'}</span>
-            </button>
-          )) : <p className="command-empty">No matches</p>}
+      {groups.length ? (
+        <div className="command-catalog" aria-label="Ayra slash commands">
+          {groups.map(({ category, names }) => (
+            <section className="command-group glass-panel" key={category} aria-label={category}>
+              <h3>{category}</h3>
+              <div className="command-list">
+                {names.map((name) => (
+                  <button
+                    className="command-chip"
+                    key={name}
+                    type="button"
+                    onClick={() => copyCommand(name)}
+                    aria-label={copied === name ? `Copied ${name}` : `Copy ${name}`}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
-      )}
+      ) : <p className="command-empty">No matches</p>}
       {message && <span className="command-search-feedback" role="status">{message}</span>}
     </div>
   )

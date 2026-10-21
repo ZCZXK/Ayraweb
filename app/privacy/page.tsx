@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       <section>
         <h2>Use and service providers</h2>
         <p>Ayra uses this data to run requested bot features and configured server logs. The bot uses a local SQLite database on its host, rather than a separate database provider. Discord processes bot interactions, and Render hosts the bot service. We do not sell user data.</p>
-        <p>The website uses Vercel Analytics in production, loads fonts from Google Fonts, and embeds a YouTube player on the home page. Loading or using that player connects your browser to YouTube and Google. Those providers handle information under their own policies, including <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google’s Privacy Policy</a>.</p>
+        <p>The website uses Vercel Analytics in production and loads fonts from Google Fonts. The home page’s YouTube player loads only when you open it; doing so connects your browser to YouTube and Google. Those providers handle information under their own policies, including <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google’s Privacy Policy</a>.</p>
       </section>
       <section>
         <h2>Retention and deletion</h2>
