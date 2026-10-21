@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { ScrollRevealObserver } from '../components/scroll-reveal'
 
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
 const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
@@ -24,6 +25,7 @@ function Icon({ name, className = '' }: { name: string; className?: string }) {
 export default function Home() {
   return (
     <main className="site-shell">
+      <ScrollRevealObserver />
       <div className="aurora-layer" aria-hidden="true" />
       <header className="site-header">
         <a className="brand" href="#home" aria-label="Ayra home">
@@ -37,16 +39,16 @@ export default function Home() {
       </header>
 
       <section className="hero" id="home" aria-labelledby="hero-title">
-        <div className="hero-copy">
+        <div className="hero-copy" data-reveal="left">
           <p className="eyebrow"><span className="eyebrow-line" /> Discord bot</p>
-          <h1 id="hero-title">More order.<br /><em>More room</em> to grow.</h1>
-          <p className="hero-description">Moderation, tickets, and community tools for Discord.</p>
+          <h1 id="hero-title">Ayra<span className="hero-title-dot">.</span></h1>
+          <p className="hero-description">Moderation, tickets, and community tools.</p>
           <div className="hero-actions">
             <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
             <a className="text-link" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support server <Icon name="arrow" className="inline-arrow" /></a>
           </div>
         </div>
-        <div className="hero-art" aria-label="Ayra bot icon">
+        <div className="hero-art" aria-label="Ayra bot icon" data-reveal="right" data-reveal-delay="100">
           <div className="art-orbit art-orbit--one" aria-hidden="true" /><div className="art-orbit art-orbit--two" aria-hidden="true" />
           <div className="icon-frame"><Image src="/bot-icon.png" alt="Ayra bot icon" width={176} height={176} className="hero-icon" priority /></div>
           <div className="icon-caption"><span className="caption-rule" /> AYRA · DISCORD BOT</div>
@@ -54,10 +56,10 @@ export default function Home() {
       </section>
 
       <section className="section features-section" id="features" aria-labelledby="features-title">
-        <div className="section-heading"><div><p className="eyebrow"><span className="eyebrow-line" /> Ayra</p><h2 id="features-title">Features</h2></div></div>
+        <div className="section-heading" data-reveal="up"><div><p className="eyebrow"><span className="eyebrow-line" /> Ayra</p><h2 id="features-title">Features</h2></div></div>
         <div className="feature-grid">
-          {features.map((feature) => (
-            <article className="feature-card glass-panel" key={feature.id}>
+          {features.map((feature, index) => (
+            <article className="feature-card glass-panel" key={feature.id} data-reveal="up" data-reveal-delay={String(index * 85)}>
               <div className="feature-topline"><span className="feature-index">{feature.id}</span><Icon name={feature.icon} className="feature-icon" /></div>
               <h3>{feature.title}</h3>
               <div className="command-list" aria-label={`${feature.title} commands`}>{feature.commands.map((command) => <code key={command}>{command}</code>)}</div>
@@ -66,18 +68,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section reviews-section" id="reviews" aria-labelledby="reviews-title">
+      <section className="section reviews-section" id="reviews" aria-labelledby="reviews-title" data-reveal="up">
         <div className="review-mark" aria-hidden="true"><Icon name="quote" /></div>
         <div className="review-copy"><p className="eyebrow"><span className="eyebrow-line" /> Community</p><h2 id="reviews-title">Reviews</h2><p>No public reviews yet.</p></div>
         <div className="review-status glass-panel"><span className="status-dot" /> No reviews</div>
       </section>
 
-      <section className="section support-section" id="support" aria-labelledby="support-title">
+      <section className="section support-section" id="support" aria-labelledby="support-title" data-reveal="up">
         <div className="support-copy"><p className="eyebrow"><span className="eyebrow-line" /> Support</p><h2 id="support-title">Need help?</h2><p>Use <code>/ticket</code> or join the support server.</p></div>
         <div className="support-actions"><a className="glass-button glass-button--primary" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Support server</span><Icon name="arrow" className="button-arrow" /></a></div>
       </section>
 
-      <footer className="site-footer">
+      <footer className="site-footer" data-reveal="up" data-reveal-delay="100">
         <a className="footer-brand" href="#home"><Image src="/bot-icon.png" alt="" width={28} height={28} /> AYRA</a>
         <div className="footer-links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support</a></div>
       </footer>
