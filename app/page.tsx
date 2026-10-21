@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import type { Metadata } from 'next'
 import { ScrollRevealObserver } from '../components/scroll-reveal'
 import { OwnerCard } from '../components/owner-card'
 import { CommandSearch } from '../components/command-search'
@@ -9,6 +10,25 @@ import { allCommands } from '../data/command-catalog'
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
 const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
 const SUPPORT_EMAIL = 'support@ayrabot.fun'
+
+export const metadata: Metadata = {
+  title: 'Ayra — Discord Bot',
+  description: 'Moderation, tickets, and community tools for Discord servers.',
+  openGraph: {
+    type: 'website',
+    url: 'https://ayrabot.fun/',
+    siteName: 'Ayra',
+    title: 'Ayra — Discord Bot',
+    description: 'Moderation, tickets, and community tools for Discord servers.',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Ayra Discord bot' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ayra — Discord Bot',
+    description: 'Moderation, tickets, and community tools for Discord servers.',
+    images: ['/opengraph-image'],
+  },
+}
 
 function Icon({ name, className = '' }: { name: string; className?: string }) {
   const common = { className, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true as const }
