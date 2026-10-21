@@ -2,6 +2,8 @@ import Image from 'next/image'
 import { ScrollRevealObserver } from '../components/scroll-reveal'
 import { SpotifyMiniPlayer } from '../components/spotify-mini-player'
 import { OwnerCard } from '../components/owner-card'
+import { CommandSearch } from '../components/command-search'
+import { CopyInviteButton } from '../components/copy-invite-button'
 
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
 const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
@@ -13,6 +15,7 @@ const features = [
   { id: '03', icon: 'grid', title: 'Server tools', commands: ['/serverinfo', '/membercount', '/roles'] },
   { id: '04', icon: 'spark', title: 'Community', commands: ['/giveaway', '/poll', '/remind'] },
 ]
+const searchableCommands = features.flatMap((feature) => feature.commands.map((name) => ({ name, category: feature.title })))
 
 function Icon({ name, className = '' }: { name: string; className?: string }) {
   const common = { className, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true as const }
@@ -49,6 +52,7 @@ export default function Home() {
           <p className="hero-description">Moderation, tickets, and community tools.</p>
           <div className="hero-actions">
             <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
+            <CopyInviteButton inviteUrl={INVITE_URL} />
             <a className="text-link" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support server <Icon name="arrow" className="inline-arrow" /></a>
           </div>
           <SpotifyMiniPlayer />
@@ -61,7 +65,7 @@ export default function Home() {
       </section>
 
       <section className="section features-section" id="features" aria-labelledby="features-title">
-        <div className="section-heading" data-reveal="up"><div><p className="eyebrow"><span className="eyebrow-line" /> Ayra</p><h2 id="features-title">Features</h2></div></div>
+        <div className="section-heading" data-reveal="up"><div><p className="eyebrow"><span className="eyebrow-line" /> Ayra</p><h2 id="features-title">Features</h2></div><CommandSearch commands={searchableCommands} /></div>
         <div className="feature-grid">
           {features.map((feature, index) => (
             <article className="feature-card glass-panel" key={feature.id} data-reveal="up" data-reveal-delay={String(index * 85)}>

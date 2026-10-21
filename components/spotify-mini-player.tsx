@@ -8,8 +8,7 @@ const IFRAME_API_URL = 'https://open.spotify.com/embed/iframe-api/v1'
 type PlaybackUpdate = { data: { isPaused: boolean } }
 
 type SpotifyEmbedController = {
-  resume(): void
-  pause(): void
+  togglePlay(): void
   addListener(event: 'playback_update', listener: (event: PlaybackUpdate) => void): void
   destroy(): void
 }
@@ -134,30 +133,31 @@ export function SpotifyMiniPlayer() {
   function togglePlayback() {
     const controller = controllerRef.current
     if (!controller) return
-    if (isPlaying) controller.pause()
-    else controller.resume()
+    controller.togglePlay()
   }
 
   return (
-    <div className={`music-player glass-panel${isPlaying ? ' music-player--playing' : ''}`} data-reveal="up" role="group" aria-label="I Wanna Be Yours by Arctic Monkeys music player">
-      <button
-        className="music-play-button"
-        type="button"
-        onClick={togglePlayback}
-        disabled={!isReady || unavailable}
-        aria-label={isPlaying ? 'Pause I Wanna Be Yours' : 'Play I Wanna Be Yours'}
-      >
-        <span className="music-record" aria-hidden="true"><span className="music-record-center" /></span>
-        <svg className="music-control-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          {isPlaying ? <><rect x="7" y="5" width="3.5" height="14" rx="1"/><rect x="13.5" y="5" width="3.5" height="14" rx="1"/></> : <path d="M8 5.9c0-.8.87-1.28 1.54-.84l9.2 6.1a1 1 0 0 1 0 1.68l-9.2 6.1A1 1 0 0 1 8 18.1V5.9Z"/>}
-        </svg>
-      </button>
-      <div className="music-track-info">
-        <strong>I Wanna Be Yours</strong>
-        <span>Arctic Monkeys</span>
-        {unavailable && <span className="music-track-error" role="status">Spotify unavailable</span>}
+    <div className="music-player-reveal" data-reveal="up">
+      <div className={`music-player glass-panel${isPlaying ? ' music-player--playing' : ''}`} role="group" aria-label="I Wanna Be Yours by Arctic Monkeys music player">
+        <button
+          className="music-play-button"
+          type="button"
+          onClick={togglePlayback}
+          disabled={!isReady || unavailable}
+          aria-label={isPlaying ? 'Pause I Wanna Be Yours' : 'Play I Wanna Be Yours'}
+        >
+          <span className="music-record" aria-hidden="true"><span className="music-record-center" /></span>
+          <svg className="music-control-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            {isPlaying ? <><rect x="7" y="5" width="3.5" height="14" rx="1"/><rect x="13.5" y="5" width="3.5" height="14" rx="1"/></> : <path d="M8 5.9c0-.8.87-1.28 1.54-.84l9.2 6.1a1 1 0 0 1 0 1.68l-9.2 6.1A1 1 0 0 1 8 18.1V5.9Z"/>}
+          </svg>
+        </button>
+        <div className="music-track-info">
+          <strong>I Wanna Be Yours</strong>
+          <span>Arctic Monkeys</span>
+          {unavailable && <span className="music-track-error" role="status">Spotify unavailable</span>}
+        </div>
+        <SpotifyEmbedHost onReady={handleReady} onPlaybackUpdate={handlePlaybackUpdate} onUnavailable={handleUnavailable} />
       </div>
-      <SpotifyEmbedHost onReady={handleReady} onPlaybackUpdate={handlePlaybackUpdate} onUnavailable={handleUnavailable} />
     </div>
   )
 }
