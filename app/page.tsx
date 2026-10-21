@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { ScrollRevealObserver } from '../components/scroll-reveal'
-import { SpotifyMiniPlayer } from '../components/spotify-mini-player'
+import { YouTubeMiniPlayer } from '../components/youtube-mini-player'
 import { OwnerCard } from '../components/owner-card'
 import { CommandSearch } from '../components/command-search'
 import { ParticleField } from '../components/particle-field'
@@ -55,7 +55,7 @@ export default function Home() {
             <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
             <a className="glass-button glass-button--quiet" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Support server</span><Icon name="arrow" className="button-arrow" /></a>
           </div>
-          <SpotifyMiniPlayer />
+          <YouTubeMiniPlayer />
         </div>
         <div className="hero-art" aria-label="Ayra bot icon" data-reveal="right" data-reveal-delay="100">
           <div className="art-orbit art-orbit--one" aria-hidden="true" /><div className="art-orbit art-orbit--two" aria-hidden="true" />
