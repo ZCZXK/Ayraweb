@@ -12,6 +12,7 @@ a:focus-visible { outline: 2px solid var(--mint); outline-offset: 4px; }
 .aurora-layer { position: fixed; z-index: -2; inset: 0; background-image: linear-gradient(180deg, rgba(5, 7, 10, .22), rgba(5, 7, 10, .36) 34%, rgba(5, 7, 10, .76) 78%, #05070a 100%), url('/aurora-bg.jpg'); background-position: center 38%; background-size: cover; opacity: .94; pointer-events: none; }
 .aurora-layer::before { position: absolute; inset: 0; background: radial-gradient(ellipse 44% 24% at 20% 42%, rgba(51, 244, 175, .2), transparent 70%), radial-gradient(ellipse 42% 26% at 78% 48%, rgba(159, 121, 255, .18), transparent 72%); filter: blur(27px); mix-blend-mode: screen; opacity: .52; content: ''; pointer-events: none; }
 .site-shell::before { position: fixed; z-index: -1; inset: 0; background: radial-gradient(ellipse at 80% 15%, rgba(70, 225, 177, .16), transparent 37%), radial-gradient(ellipse at 12% 35%, rgba(156, 120, 255, .13), transparent 34%); content: ''; pointer-events: none; }
+.particle-field { position: fixed; z-index: -1; inset: 0; display: block; opacity: .76; pointer-events: none; }
 .site-header, .hero, .section, .site-footer { width: min(1160px, calc(100% - 64px)); margin-inline: auto; }
 .site-header { position: relative; z-index: 5; display: flex; height: 88px; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
 .brand { display: inline-flex; align-items: center; gap: 11px; }
@@ -48,10 +49,6 @@ h1 em, .hero-title-dot, .support-copy h2 em { color: #d9fbe7; font-style: normal
 .text-link { display: inline-flex; align-items: center; gap: 9px; color: rgba(241,246,244,.83); font-size: 12px; font-weight: 500; transition: color .18s ease; }
 .text-link:hover { color: var(--mint); }
 .text-link span { color: var(--mint); font-size: 15px; }
-.copy-invite { padding: 0; border: 0; background: transparent; color: rgba(241,246,244,.83); cursor: pointer; font: inherit; }
-.copy-invite svg { width: 14px; height: 14px; flex: 0 0 auto; }
-.copy-invite:hover { color: var(--mint); }
-.copy-invite:focus-visible { outline: 2px solid var(--mint); outline-offset: 4px; }
 .permission-note { margin: 18px 0 0; color: rgba(177,186,184,.63); font-size: 10px; }
 .hero-art { position: relative; display: grid; min-height: 380px; place-items: center; }
 .hero-art::before { position: absolute; width: 290px; height: 290px; border-radius: 50%; background: radial-gradient(circle, rgba(125,255,197,.2), rgba(145,113,255,.08) 40%, transparent 72%); filter: blur(15px); opacity: .72; content: ''; pointer-events: none; }

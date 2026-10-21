@@ -3,7 +3,7 @@ import { ScrollRevealObserver } from '../components/scroll-reveal'
 import { SpotifyMiniPlayer } from '../components/spotify-mini-player'
 import { OwnerCard } from '../components/owner-card'
 import { CommandSearch } from '../components/command-search'
-import { CopyInviteButton } from '../components/copy-invite-button'
+import { ParticleField } from '../components/particle-field'
 
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
 const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
@@ -34,6 +34,7 @@ export default function Home() {
     <main className="site-shell">
       <ScrollRevealObserver />
       <div className="aurora-layer" aria-hidden="true" />
+      <ParticleField />
       <header className="site-header">
         <a className="brand" href="#home" aria-label="Ayra home">
           <Image src="/bot-icon.png" alt="" width={42} height={42} className="brand-icon" priority />
@@ -52,8 +53,7 @@ export default function Home() {
           <p className="hero-description">Moderation, tickets, and community tools.</p>
           <div className="hero-actions">
             <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
-            <CopyInviteButton inviteUrl={INVITE_URL} />
-            <a className="text-link" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support server <Icon name="arrow" className="inline-arrow" /></a>
+            <a className="glass-button glass-button--quiet" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Support server</span><Icon name="arrow" className="button-arrow" /></a>
           </div>
           <SpotifyMiniPlayer />
         </div>
