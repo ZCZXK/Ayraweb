@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { ScrollRevealObserver } from './scroll-reveal'
+import { ThemeToggle } from './theme-toggle'
 
 const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
 
@@ -17,6 +18,7 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
         <nav className="main-nav" aria-label="Legal navigation">
           <a href="/">Home</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a>
         </nav>
+        <ThemeToggle />
         <a className="glass-button glass-button--small" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support</a>
       </header>
       <article className="legal-content glass-panel" data-reveal="up">
