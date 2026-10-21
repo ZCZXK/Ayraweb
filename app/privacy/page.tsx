@@ -23,7 +23,7 @@ export default function PrivacyPage() {
         <h2>Retention and deletion</h2>
         <p>The bot code has no automatic time-based deletion schedule. Closing a ticket removes its Discord channel but leaves ticket metadata in the database. Other records remain until cleared by a feature or the database is removed.</p>
         <p>The reviewed Render configuration uses a free service without a persistent disk, so its local database may be reset when the service is replaced or redeployed. No fixed retention period is promised.</p>
-        <p>For a data question or deletion request, contact us through the <a href="https://discord.gg/GEPmvs57Yx" target="_blank" rel="noopener noreferrer">Ayra support server</a>. Messages already posted in Discord may need to be removed by a server moderator.</p>
+        <p>For a data question or deletion request, email <a href="mailto:support@ayrabot.fun">support@ayrabot.fun</a> or contact us through the <a href="https://discord.gg/GEPmvs57Yx" target="_blank" rel="noopener noreferrer">Ayra support server</a>. Messages already posted in Discord may need to be removed by a server moderator.</p>
       </section>
     </LegalPage>
   )

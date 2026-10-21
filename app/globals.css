@@ -89,6 +89,7 @@ h1 em, .hero-title-dot, .support-copy h2 em { color: #d9fbe7; font-style: normal
 .support-copy .eyebrow { margin-bottom: 14px; }
 .support-copy h2 { font-size: clamp(36px, 5vw, 58px); }
 .support-copy > p:last-child { max-width: 570px; margin: 17px 0 0; color: rgba(222,229,227,.72); font-size: 13px; line-height: 1.7; }
+.support-copy > p a { color: var(--mint); text-decoration: underline; text-decoration-color: rgba(200,255,224,.42); text-underline-offset: 3px; }
 .support-copy code { font-size: 10px; }
 .support-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .music-player { display: grid; width: min(560px, 100%); grid-template-columns: 54px minmax(120px, 1fr) 180px; align-items: center; gap: 13px; margin-top: 25px; padding: 10px 12px; border-radius: 19px; }
@@ -101,9 +102,9 @@ h1 em, .hero-title-dot, .support-copy h2 em { color: #d9fbe7; font-style: normal
 .music-record-center { position: absolute; z-index: 1; top: 50%; left: 50%; width: 11px; height: 11px; transform: translate(-50%, -50%); border: 2px solid rgba(238,255,246,.9); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #d8c5ff, #82d8ae 75%); }
 .music-control-icon { position: relative; z-index: 2; width: 14px; height: 14px; filter: drop-shadow(0 1px 2px rgba(0,0,0,.65)); }
 .music-track-info { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
-.music-track-label { color: rgba(207,219,214,.6); font-size: 8px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
 .music-track-info strong { overflow: hidden; color: #f5faf7; font-family: Manrope, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: -.02em; text-overflow: ellipsis; white-space: nowrap; }
 .music-track-info > span:last-child { color: rgba(212,222,218,.63); font-size: 10px; }
+.music-track-error { color: #f0b9ad; font-size: 9px; }
 .music-player-embed { min-width: 0; width: 100%; height: 80px; overflow: hidden; border: 1px solid rgba(255,255,255,.09); border-radius: 11px; background: radial-gradient(circle at 82% 14%, rgba(192,255,218,.12), transparent 54%), linear-gradient(135deg, rgba(40,49,47,.82), rgba(18,23,25,.72)); }
 .spotify-embed-mount { width: 100%; height: 80px; }
 .spotify-embed-mount iframe { display: block !important; width: 100% !important; height: 80px !important; border: 0; border-radius: 10px; }

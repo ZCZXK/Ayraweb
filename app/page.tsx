@@ -5,6 +5,7 @@ import { OwnerCard } from '../components/owner-card'
 
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
 const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
+const SUPPORT_EMAIL = 'support@ayrabot.fun'
 
 const features = [
   { id: '01', icon: 'shield', title: 'Moderation', commands: ['/warn', '/mute', '/ban', '/slowmode'] },
@@ -21,6 +22,7 @@ function Icon({ name, className = '' }: { name: string; className?: string }) {
   if (name === 'spark') return <svg {...common}><path d="M12 3.5 14 9l5.5 2-5.5 2-2 5.5L10 13l-5.5-2L10 9l2-5.5Z"/><path d="m19 15 .85 2.15L22 18l-2.15.85L19 21l-.85-2.15L16 18l2.15-.85L19 15Z"/></svg>
   if (name === 'arrow') return <svg {...common}><path d="M7 17 17 7M8 7h9v9"/></svg>
   if (name === 'discord') return <svg {...common}><path d="M7 7.2a14 14 0 0 1 3-.9l.45.9a11 11 0 0 1 3.1 0l.45-.9a14 14 0 0 1 3 .9c1.8 2.6 2.55 5.15 2.3 7.65a12 12 0 0 1-3.65 1.85l-.8-1.3c.5-.18.98-.42 1.42-.7-2.75 1.28-5.82 1.28-8.55 0 .44.28.91.52 1.42.7l-.8 1.3a12 12 0 0 1-3.65-1.85C4.95 12.35 5.7 9.8 7 7.2Z"/><path d="M9 12h.01M15 12h.01" strokeWidth="2.4"/></svg>
+  if (name === 'mail') return <svg {...common}><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4.5 7 7.5 5.5L19.5 7"/></svg>
   return <svg {...common}><path d="M5 7.5h14M5 12h9M5 16.5h6"/><path d="m16 15 2 2 4-4"/></svg>
 }
 
@@ -78,8 +80,8 @@ export default function Home() {
       </section>
 
       <section className="section support-section" id="support" aria-labelledby="support-title" data-reveal="up">
-        <div className="support-copy"><p className="eyebrow"><span className="eyebrow-line" /> Support</p><h2 id="support-title">Need help?</h2><p>Use <code>/ticket</code> or join the support server.</p></div>
-        <div className="support-actions"><a className="glass-button glass-button--primary" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Support server</span><Icon name="arrow" className="button-arrow" /></a></div>
+        <div className="support-copy"><p className="eyebrow"><span className="eyebrow-line" /> Support</p><h2 id="support-title">Need help?</h2><p>Use <code>/ticket</code>, join the support server, or email <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.</p></div>
+        <div className="support-actions"><a className="glass-button glass-button--primary" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Support server</span><Icon name="arrow" className="button-arrow" /></a><a className="glass-button glass-button--quiet" href={`mailto:${SUPPORT_EMAIL}`}><Icon name="mail" /><span>Email support</span></a></div>
       </section>
 
       <section className="section owner-section" id="owner" aria-label="Ayra owner portfolio" data-reveal="up">
@@ -89,7 +91,7 @@ export default function Home() {
 
       <footer className="site-footer" data-reveal="up" data-reveal-delay="100">
         <a className="footer-brand" href="#home"><Image src="/bot-icon.png" alt="" width={28} height={28} /> AYRA</a>
-        <div className="footer-links"><a href="#owner">Owner</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support</a></div>
+        <div className="footer-links"><a href="#owner">Owner</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support</a><a href={`mailto:${SUPPORT_EMAIL}`}>Email</a></div>
       </footer>
     </main>
   )

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 
 const TRACK_URI = 'spotify:track:5XeFesFbtLpXzIVDNQP22n'
 const IFRAME_API_URL = 'https://open.spotify.com/embed/iframe-api/v1'
@@ -74,39 +74,62 @@ function loadSpotifyIframeAPI(): Promise<SpotifyIframeAPI> {
   return spotifyApiPromise
 }
 
+type SpotifyEmbedHostProps = {
+  onReady: (controller: SpotifyEmbedController) => void
+  onPlaybackUpdate: (playing: boolean) => void
+  onUnavailable: () => void
+}
+
+const SpotifyEmbedHost = memo(function SpotifyEmbedHost({ onReady, onPlaybackUpdate, onUnavailable }: SpotifyEmbedHostProps) {
+  const mountRef = useRef<HTMLDivElement>(null)
+  const localController = useRef<SpotifyEmbedController | null>(null)
+
+  useEffect(() => {
+    let active = true
+    const mount = mountRef.current
+    if (!mount) return
+
+    loadSpotifyIframeAPI()
+      .then((api) => {
+        if (!active) return
+        api.createController(mount, { uri: TRACK_URI, width: '100%', height: 80 }, (controller) => {
+          if (!active) {
+            controller.destroy()
+            return
+          }
+          localController.current = controller
+          controller.addListener('playback_update', (event) => onPlaybackUpdate(!event.data.isPaused))
+          onReady(controller)
+        })
+      })
+      .catch(() => { if (active) onUnavailable() })
+
+    return () => {
+      active = false
+      localController.current?.destroy()
+      localController.current = null
+    }
+  }, [onReady, onPlaybackUpdate, onUnavailable])
+
+  return (
+    <div className="music-player-embed" aria-label="Compact Spotify player">
+      <div ref={mountRef} className="spotify-embed-mount" />
+    </div>
+  )
+})
+
 export function SpotifyMiniPlayer() {
-  const embedRef = useRef<HTMLDivElement>(null)
   const controllerRef = useRef<SpotifyEmbedController | null>(null)
   const [isReady, setIsReady] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [unavailable, setUnavailable] = useState(false)
 
-  useEffect(() => {
-    let active = true
-    const element = embedRef.current
-    if (!element) return
-
-    loadSpotifyIframeAPI()
-      .then((api) => {
-        if (!active) return
-        api.createController(element, { uri: TRACK_URI, width: '100%', height: 80 }, (controller) => {
-          if (!active) {
-            controller.destroy()
-            return
-          }
-          controllerRef.current = controller
-          controller.addListener('playback_update', (event) => setIsPlaying(!event.data.isPaused))
-          setIsReady(true)
-        })
-      })
-      .catch(() => { if (active) setUnavailable(true) })
-
-    return () => {
-      active = false
-      controllerRef.current?.destroy()
-      controllerRef.current = null
-    }
+  const handleReady = useCallback((controller: SpotifyEmbedController) => {
+    controllerRef.current = controller
+    setIsReady(true)
   }, [])
+  const handlePlaybackUpdate = useCallback((playing: boolean) => setIsPlaying(playing), [])
+  const handleUnavailable = useCallback(() => setUnavailable(true), [])
 
   function togglePlayback() {
     const controller = controllerRef.current
@@ -121,7 +144,7 @@ export function SpotifyMiniPlayer() {
         className="music-play-button"
         type="button"
         onClick={togglePlayback}
-        disabled={!isReady}
+        disabled={!isReady || unavailable}
         aria-label={isPlaying ? 'Pause I Wanna Be Yours' : 'Play I Wanna Be Yours'}
       >
         <span className="music-record" aria-hidden="true"><span className="music-record-center" /></span>
@@ -130,15 +153,11 @@ export function SpotifyMiniPlayer() {
         </svg>
       </button>
       <div className="music-track-info">
-        <span className="music-track-label">On repeat</span>
         <strong>I Wanna Be Yours</strong>
         <span>Arctic Monkeys</span>
+        {unavailable && <span className="music-track-error" role="status">Spotify unavailable</span>}
       </div>
-      <div className="music-player-embed" aria-label="Spotify embedded player">
-        {unavailable
-          ? <span className="spotify-player-error" role="status">Spotify unavailable</span>
-          : <div ref={embedRef} className="spotify-embed-mount" />}
-      </div>
+      <SpotifyEmbedHost onReady={handleReady} onPlaybackUpdate={handlePlaybackUpdate} onUnavailable={handleUnavailable} />
     </div>
   )
 }
