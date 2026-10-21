@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       <section>
         <h2>Use and service providers</h2>
         <p>Ayra uses this data to run requested bot features and configured server logs. The bot uses a local SQLite database on its host, rather than a separate database provider. Discord processes bot interactions, and Render hosts the bot service. We do not sell user data.</p>
-        <p>The website uses Vercel Analytics in production and loads fonts from Google Fonts. Those providers may receive technical request data under their own privacy policies.</p>
+        <p>The website uses Vercel Analytics in production, loads fonts from Google Fonts, and embeds a Spotify player on the home page. Loading or using that player connects your browser to Spotify. Each provider handles information under its own policies, including <a href="https://www.spotify.com/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">Spotify’s Privacy Policy</a>.</p>
       </section>
       <section>
         <h2>Retention and deletion</h2>

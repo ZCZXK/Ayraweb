@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import { ScrollRevealObserver } from '../components/scroll-reveal'
+import { SpotifyMiniPlayer } from '../components/spotify-mini-player'
+import { OwnerCard } from '../components/owner-card'
 
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
 const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
@@ -47,6 +49,7 @@ export default function Home() {
             <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
             <a className="text-link" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support server <Icon name="arrow" className="inline-arrow" /></a>
           </div>
+          <SpotifyMiniPlayer />
         </div>
         <div className="hero-art" aria-label="Ayra bot icon" data-reveal="right" data-reveal-delay="100">
           <div className="art-orbit art-orbit--one" aria-hidden="true" /><div className="art-orbit art-orbit--two" aria-hidden="true" />
@@ -79,9 +82,14 @@ export default function Home() {
         <div className="support-actions"><a className="glass-button glass-button--primary" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Support server</span><Icon name="arrow" className="button-arrow" /></a></div>
       </section>
 
+      <section className="section owner-section" id="owner" aria-label="Ayra owner portfolio" data-reveal="up">
+        <p className="eyebrow"><span className="eyebrow-line" /> Owner</p>
+        <OwnerCard />
+      </section>
+
       <footer className="site-footer" data-reveal="up" data-reveal-delay="100">
         <a className="footer-brand" href="#home"><Image src="/bot-icon.png" alt="" width={28} height={28} /> AYRA</a>
-        <div className="footer-links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support</a></div>
+        <div className="footer-links"><a href="#owner">Owner</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support</a></div>
       </footer>
     </main>
   )

@@ -89,6 +89,31 @@ h1 em, .hero-title-dot, .support-copy h2 em { color: #d9fbe7; font-style: normal
 .support-copy > p:last-child { max-width: 570px; margin: 17px 0 0; color: rgba(222,229,227,.72); font-size: 13px; line-height: 1.7; }
 .support-copy code { font-size: 10px; }
 .support-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.music-player { display: grid; width: min(560px, 100%); grid-template-columns: 54px minmax(120px, 1fr) 180px; align-items: center; gap: 13px; margin-top: 25px; padding: 10px 12px; border-radius: 19px; }
+.music-play-button { position: relative; display: grid; width: 54px; height: 54px; place-items: center; padding: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.25); border-radius: 50%; background: linear-gradient(145deg, rgba(255,255,255,.16), rgba(255,255,255,.04) 58%, rgba(177,255,216,.12)); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 24px rgba(0,0,0,.22); color: #effff6; cursor: pointer; backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); transition: transform .2s ease, border-color .2s ease, opacity .2s ease; }
+.music-play-button:hover:not(:disabled) { transform: scale(1.045); border-color: rgba(200,255,224,.52); }
+.music-play-button:focus-visible { outline: 2px solid var(--mint); outline-offset: 4px; }
+.music-play-button:disabled { opacity: .55; cursor: wait; }
+.music-record { position: absolute; inset: 3px; border: 1px solid rgba(255,255,255,.19); border-radius: 50%; background: repeating-radial-gradient(circle at center, #111616 0 2px, #1a2020 3px 4px, #0b0f10 5px 7px); box-shadow: inset 0 1px 2px rgba(255,255,255,.16), 0 0 22px rgba(200,255,224,.08); }
+.music-record::before { position: absolute; inset: 10px; border: 1px solid rgba(255,255,255,.16); border-radius: 50%; content: ''; }
+.music-record-center { position: absolute; z-index: 1; top: 50%; left: 50%; width: 11px; height: 11px; transform: translate(-50%, -50%); border: 2px solid rgba(238,255,246,.9); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #d8c5ff, #82d8ae 75%); }
+.music-control-icon { position: relative; z-index: 2; width: 14px; height: 14px; filter: drop-shadow(0 1px 2px rgba(0,0,0,.65)); }
+.music-track-info { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+.music-track-label { color: rgba(207,219,214,.6); font-size: 8px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.music-track-info strong { overflow: hidden; color: #f5faf7; font-family: Manrope, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: -.02em; text-overflow: ellipsis; white-space: nowrap; }
+.music-track-info > span:last-child { color: rgba(212,222,218,.63); font-size: 10px; }
+.music-player-embed { min-width: 0; width: 100%; height: 80px; overflow: hidden; border: 1px solid rgba(255,255,255,.09); border-radius: 11px; background: radial-gradient(circle at 82% 14%, rgba(192,255,218,.12), transparent 54%), linear-gradient(135deg, rgba(40,49,47,.82), rgba(18,23,25,.72)); }
+.spotify-embed-mount { width: 100%; height: 80px; }
+.spotify-embed-mount iframe { display: block !important; width: 100% !important; height: 80px !important; border: 0; border-radius: 10px; }
+.spotify-player-error { display: block; padding: 12px 8px; color: var(--muted); font-size: 9px; }
+.owner-section { display: grid; grid-template-columns: minmax(130px, .55fr) minmax(0, 1fr); align-items: center; gap: 38px; padding-block: 54px; }
+.owner-section > .eyebrow { margin: 0; }
+.owner-card { display: flex; width: min(480px, 100%); align-items: center; gap: 14px; padding: 13px 15px; border-radius: 18px; }
+.owner-monogram { display: grid; width: 43px; height: 43px; flex: 0 0 auto; place-items: center; border: 1px solid rgba(215,255,232,.24); border-radius: 15px; background: linear-gradient(145deg, rgba(200,255,224,.16), rgba(216,197,255,.09)); color: var(--mint); font-family: Manrope, sans-serif; font-size: 18px; font-weight: 600; }
+.owner-identity { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 3px; }
+.owner-identity > span { color: rgba(207,219,214,.62); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+.owner-identity > strong { font-family: Manrope, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: -.02em; }
+.owner-tag { padding: 7px 9px; border: 1px solid rgba(255,255,255,.12); border-radius: 9px; background: rgba(255,255,255,.04); color: rgba(228,239,234,.7); font-size: 9px; white-space: nowrap; }
 .site-footer { display: flex; min-height: 78px; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); color: rgba(185,194,191,.68); font-size: 10px; }
 .footer-brand { display: inline-flex; align-items: center; gap: 8px; color: rgba(244,247,246,.85); font-size: 10px; }
 .footer-brand img { width: 26px; height: 26px; border-radius: 8px; object-fit: cover; }
@@ -116,8 +141,10 @@ html.has-scroll-animations .feature-card.is-visible:hover { transform: translate
 @media (prefers-reduced-motion: no-preference) {
   .aurora-layer { animation: aurora-drift 38s ease-in-out infinite alternate; }
   .icon-frame { animation: icon-float 7s ease-in-out infinite; }
+  .music-player--playing .music-record { animation: record-spin 5.4s linear infinite; }
   @keyframes aurora-drift { from { background-position: center 32%; } to { background-position: center 40%; } }
   @keyframes icon-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+  @keyframes record-spin { to { transform: rotate(360deg); } }
 }
 
 @media (max-width: 900px) {
@@ -174,6 +201,12 @@ html.has-scroll-animations .feature-card.is-visible:hover { transform: translate
   .review-mark svg { width: 20px; height: 20px; }
   .review-status { grid-column: 2; justify-self: start; font-size: 9px; }
   .support-section { align-items: flex-start; flex-direction: column; gap: 23px; padding-block: 57px; }
+  .music-player { grid-template-columns: 46px minmax(0, 1fr); gap: 10px; margin-top: 22px; padding: 9px; border-radius: 16px; }
+  .music-play-button { width: 46px; height: 46px; }
+  .music-record::before { inset: 8px; }
+  .music-player-embed { grid-column: 1 / -1; height: 80px; }
+  .owner-section { grid-template-columns: 1fr; gap: 15px; padding-block: 42px; }
+  .owner-card { width: 100%; }
   .support-copy h2 { font-size: 42px; }
   .support-actions { width: 100%; }
   .site-footer { min-height: 72px; flex-wrap: wrap; justify-content: space-between; padding-block: 13px; }
