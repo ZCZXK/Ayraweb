@@ -1,12 +1,13 @@
 import Image from 'next/image'
 
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
+const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
 
 const features = [
-  { id: '01', icon: 'shield', title: 'Moderation', description: 'Keep day-to-day moderation close at hand, from warnings and mutes to bans and slowmode.', commands: ['/warn', '/mute', '/ban', '/slowmode'] },
-  { id: '02', icon: 'ticket', title: 'Tickets and reports', description: 'Give members a clear route to ask for help or bring an issue to your team.', commands: ['/ticket', '/report'] },
-  { id: '03', icon: 'grid', title: 'Server tools', description: 'Look up useful details about members, channels, roles, and your server.', commands: ['/serverinfo', '/membercount', '/roles'] },
-  { id: '04', icon: 'spark', title: 'Community', description: 'Make room for participation with giveaways, polls, reminders, and more.', commands: ['/giveaway', '/poll', '/remind'] },
+  { id: '01', icon: 'shield', title: 'Moderation', commands: ['/warn', '/mute', '/ban', '/slowmode'] },
+  { id: '02', icon: 'ticket', title: 'Tickets', commands: ['/ticket', '/report'] },
+  { id: '03', icon: 'grid', title: 'Server tools', commands: ['/serverinfo', '/membercount', '/roles'] },
+  { id: '04', icon: 'spark', title: 'Community', commands: ['/giveaway', '/poll', '/remind'] },
 ]
 
 function Icon({ name, className = '' }: { name: string; className?: string }) {
@@ -32,21 +33,18 @@ export default function Home() {
         <nav className="main-nav" aria-label="Main navigation">
           <a href="#features">Features</a><a href="#reviews">Reviews</a><a href="#support">Support</a>
         </nav>
-        <a className="glass-button glass-button--small" href={INVITE_URL} target="_blank" rel="noopener noreferrer">
-          <Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" />
-        </a>
+        <a className="glass-button glass-button--small" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
       </header>
 
       <section className="hero" id="home" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="eyebrow"><span className="eyebrow-line" /> Discord bot for thoughtful communities</p>
+          <p className="eyebrow"><span className="eyebrow-line" /> Discord bot</p>
           <h1 id="hero-title">More order.<br /><em>More room</em> to grow.</h1>
-          <p className="hero-description">Ayra brings moderation, member support, and everyday server tools together in one place.</p>
+          <p className="hero-description">Moderation, tickets, and community tools for Discord.</p>
           <div className="hero-actions">
-            <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra to your server</span><Icon name="arrow" className="button-arrow" /></a>
-            <a className="text-link" href="#features">Explore features <span aria-hidden="true">↘</span></a>
+            <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
+            <a className="text-link" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support server <Icon name="arrow" className="inline-arrow" /></a>
           </div>
-          <p className="permission-note">Review the requested permissions in Discord before adding the bot.</p>
         </div>
         <div className="hero-art" aria-label="Ayra bot icon">
           <div className="art-orbit art-orbit--one" aria-hidden="true" /><div className="art-orbit art-orbit--two" aria-hidden="true" />
@@ -56,15 +54,12 @@ export default function Home() {
       </section>
 
       <section className="section features-section" id="features" aria-labelledby="features-title">
-        <div className="section-heading">
-          <div><p className="eyebrow"><span className="eyebrow-line" /> What Ayra does</p><h2 id="features-title">Useful by design.</h2></div>
-          <p>Tools documented for Ayra, without inflated counts or promises.</p>
-        </div>
+        <div className="section-heading"><div><p className="eyebrow"><span className="eyebrow-line" /> Ayra</p><h2 id="features-title">Features</h2></div></div>
         <div className="feature-grid">
           {features.map((feature) => (
             <article className="feature-card glass-panel" key={feature.id}>
               <div className="feature-topline"><span className="feature-index">{feature.id}</span><Icon name={feature.icon} className="feature-icon" /></div>
-              <h3>{feature.title}</h3><p>{feature.description}</p>
+              <h3>{feature.title}</h3>
               <div className="command-list" aria-label={`${feature.title} commands`}>{feature.commands.map((command) => <code key={command}>{command}</code>)}</div>
             </article>
           ))}
@@ -73,31 +68,18 @@ export default function Home() {
 
       <section className="section reviews-section" id="reviews" aria-labelledby="reviews-title">
         <div className="review-mark" aria-hidden="true"><Icon name="quote" /></div>
-        <div className="review-copy">
-          <p className="eyebrow"><span className="eyebrow-line" /> Community feedback</p>
-          <h2 id="reviews-title">Reviews, honestly.</h2>
-          <p>No public reviews are available yet. We’ll only feature feedback we can verify—never made-up testimonials or ratings.</p>
-          <a className="text-link" href={INVITE_URL} target="_blank" rel="noopener noreferrer">Try Ayra yourself <Icon name="arrow" className="inline-arrow" /></a>
-        </div>
-        <div className="review-status glass-panel"><span className="status-dot" /> No public reviews yet</div>
+        <div className="review-copy"><p className="eyebrow"><span className="eyebrow-line" /> Community</p><h2 id="reviews-title">Reviews</h2><p>No public reviews yet.</p></div>
+        <div className="review-status glass-panel"><span className="status-dot" /> No reviews</div>
       </section>
 
       <section className="section support-section" id="support" aria-labelledby="support-title">
-        <div className="support-copy">
-          <p className="eyebrow"><span className="eyebrow-line" /> Support</p>
-          <h2 id="support-title">Help, when<br /><em>you need it.</em></h2>
-          <p>In a server where Ayra is installed, use <code>/ticket</code> to ask for help or <code>/report</code> to flag an issue. You can also add Ayra to your server to use its documented support commands.</p>
-        </div>
-        <div className="support-actions">
-          <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
-          <a className="glass-button glass-button--quiet" href="#features"><span>View features</span><Icon name="arrow" className="button-arrow" /></a>
-        </div>
+        <div className="support-copy"><p className="eyebrow"><span className="eyebrow-line" /> Support</p><h2 id="support-title">Need help?</h2><p>Use <code>/ticket</code> or join the support server.</p></div>
+        <div className="support-actions"><a className="glass-button glass-button--primary" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Support server</span><Icon name="arrow" className="button-arrow" /></a></div>
       </section>
 
       <footer className="site-footer">
         <a className="footer-brand" href="#home"><Image src="/bot-icon.png" alt="" width={28} height={28} /> AYRA</a>
-        <span>Built for the people behind the server.</span>
-        <div className="footer-links"><a href="#features">Features</a><a href="#reviews">Reviews</a><a href="#support">Support</a></div>
+        <div className="footer-links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support</a></div>
       </footer>
     </main>
   )

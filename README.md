@@ -1,6 +1,6 @@
 # Ayra — Discord bot website
 
-A minimalist, aurora-backed landing page for the Ayra Discord bot. The page uses the icon supplied by the project owner, liquid-glass invite buttons, documented command categories, and a truthful review section. It contains no fabricated usage statistics or testimonials.
+A minimalist aurora landing page for Ayra with the bot icon supplied by the project owner, glass-style actions, and concise links to the bot’s legal pages.
 
 ## Run locally
 
@@ -9,11 +9,12 @@ pnpm install
 pnpm dev
 ```
 
-## Public destinations and permissions
+## Links
 
-- Bot application ID: `1489882067239047168`
-- The invite link requests no elevated permissions by default. Server owners should review and grant only the permissions the bot needs.
-- The previously published support-server invite has expired. The page directs users to Ayra’s documented `/ticket` and `/report` commands instead.
+- Bot invite: application ID `1489882067239047168` (no elevated permissions requested by default)
+- Support server: <https://discord.gg/GEPmvs57Yx>
+- Privacy: `/privacy`
+- Terms: `/terms`
 
 ## Image credit
 
