@@ -5,12 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy -- --keep-vars",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
     "@ai-sdk/gateway": "^4.0.76",
     "@ai-sdk/react": "^4.0.97",
     "@base-ui/react": "^1.5.0",
+    "@opennextjs/cloudflare": "^1.20.12",
     "@vercel/analytics": "1.6.1",
     "ai": "^7.0.94",
     "better-auth": "^1.7.3",
@@ -18,8 +22,9 @@
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",
     "lucide-react": "^1.16.0",
-    "next": "16.3.3",
+    "next": "16.4.2",
     "pg": "^8.23.0",
+    "pg-cloudflare": "^1.4.1",
     "react": "^19",
     "react-dom": "^19",
     "shadcn": "^4.11.0",
@@ -34,6 +39,7 @@
     "@types/react-dom": "^19",
     "postcss": "^8.5",
     "tailwindcss": "^4.3.3",
-    "typescript": "5.7.3"
+    "typescript": "5.7.3",
+    "wrangler": "^4.151.2"
   }
 }
