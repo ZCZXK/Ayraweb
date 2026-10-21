@@ -68,8 +68,14 @@ export function CommandSearch({ commands }: { commands: SearchCommand[] }) {
       </div>
       {groups.length ? (
         <div className="command-catalog" aria-label="Ayra slash commands">
-          {groups.map(({ category: groupName, names }) => (
-            <section className="command-group glass-panel" key={groupName} aria-label={groupName}>
+          {groups.map(({ category: groupName, names }, index) => (
+            <section
+              className="command-group glass-panel"
+              key={groupName}
+              aria-label={groupName}
+              data-reveal="up"
+              data-reveal-delay={Math.min(index * 75, 375)}
+            >
               <h3>{groupName}</h3>
               <div className="command-list">
                 {names.map((name) => (
