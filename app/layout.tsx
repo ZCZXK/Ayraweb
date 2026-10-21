@@ -3,34 +3,14 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'ayrabot.fun — Coming Soon',
-  description: 'A new signal is forming. Something beautiful is coming.',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
+  title: 'Ayraweb — Coming Soon',
+  description: 'Something beautiful is coming. Stay for a song while Ayraweb takes shape.',
+  icons: { icon: '/icon.svg' },
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f7f9ff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0b1020' },
-  ],
+  colorScheme: 'dark',
+  themeColor: '#100d0c',
 }
 
 export default function RootLayout({
@@ -39,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background">
-      <body className="antialiased">
+    <html lang="en">
+      <body>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
