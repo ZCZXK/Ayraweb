@@ -20,6 +20,14 @@ function Icon({ name, className = '' }: { name: string; className?: string }) {
 
 export default function Home() {
   return (
+    <>
+    <div className="home-loader" aria-hidden="true">
+      <div className="home-loader-content">
+        <Image src="/bot-icon.png" alt="" width={48} height={48} className="home-loader-icon" priority />
+        <span className="home-loader-wordmark">AYRA<span>.</span></span>
+        <span className="home-loader-track"><span /></span>
+      </div>
+    </div>
     <main className="site-shell">
       <ScrollRevealObserver />
       <div className="aurora-layer" aria-hidden="true" />
@@ -79,5 +87,6 @@ export default function Home() {
         <div className="footer-links"><a href="#owner">Owner</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">Support</a><a href={`mailto:${SUPPORT_EMAIL}`}>Email</a></div>
       </footer>
     </main>
+    </>
   )
 }
