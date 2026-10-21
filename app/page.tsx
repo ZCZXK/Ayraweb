@@ -1,6 +1,46 @@
-const TRACK_URL = 'https://open.spotify.com/track/5XeFesFbtLpXzIVDNQP22n'
+'use client'
+
+import { FormEvent, useState } from 'react'
+
+const SPOTIFY_EMBED_URL = 'https://open.spotify.com/embed/track/5XeFesFbtLpXzIVDNQP22n?theme=1'
+
+type SignupState = { kind: 'idle' | 'loading' | 'success' | 'error'; message: string }
 
 export default function Home() {
+  const [email, setEmail] = useState('')
+  const [consent, setConsent] = useState(false)
+  const [website, setWebsite] = useState('')
+  const [signup, setSignup] = useState<SignupState>({ kind: 'idle', message: '' })
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (signup.kind === 'loading') return
+
+    setSignup({ kind: 'loading', message: '' })
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, consent, website }),
+      })
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Could not add you right now. Please try again.')
+      }
+
+      setEmail('')
+      setConsent(false)
+      setWebsite('')
+      setSignup({ kind: 'success', message: 'You’re on the list. Thanks for being here.' })
+    } catch (error) {
+      setSignup({
+        kind: 'error',
+        message: error instanceof Error ? error.message : 'Could not add you right now. Please try again.',
+      })
+    }
+  }
+
   return (
     <main className="landing">
       <header className="masthead">
@@ -8,29 +48,59 @@ export default function Home() {
         <p className="status"><span /> Coming soon</p>
       </header>
 
-      <section className="hero" id="top" aria-labelledby="hero-title">
-        <div className="hero-copy">
-          <p className="eyebrow">A note from Ayraweb</p>
-          <h1 id="hero-title">Something<br />beautiful<br /><em>is coming.</em></h1>
-          <p className="description">We’re making a new home for Ayraweb. It won’t be long.</p>
+      <section className="main-content" id="top" aria-labelledby="hero-title">
+        <p className="eyebrow">A note from Ayraweb</p>
+        <h1 id="hero-title">Something<br /><em>beautiful</em> is coming.</h1>
+        <p className="description">We’re making a new home for Ayraweb. Leave your email and we’ll let you know when it’s ready.</p>
 
-          <a className="track-link" href={TRACK_URL} target="_blank" rel="noreferrer">
-            <span className="play-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M9 6.7c0-.76.84-1.23 1.5-.84l8.8 5.18a1.1 1.1 0 0 1 0 1.91l-8.8 5.18c-.66.39-1.5-.08-1.5-.84V6.7Z" fill="currentColor" /></svg>
-            </span>
-            <span className="track-copy">
-              <span className="track-label">Play while you wait · Spotify</span>
-              <strong>I Wanna Be Yours <span>— Arctic Monkeys</span></strong>
-            </span>
-            <svg className="external-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M6 14 14 6M6.5 6H14v7.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </a>
-        </div>
-
-        <div className="record-stage" role="img" aria-label="A vinyl record for Ayraweb">
-          <div className="record-disc">
-            <div className="record-label"><span>a</span><i /></div>
+        <form className="waitlist" onSubmit={handleSubmit}>
+          <label className="visually-hidden" htmlFor="waitlist-email">Email address</label>
+          <div className="email-row">
+            <input
+              id="waitlist-email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              inputMode="email"
+              placeholder="Your email address"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+              maxLength={254}
+              aria-describedby="waitlist-consent waitlist-status"
+            />
+            <button type="submit" disabled={!consent || signup.kind === 'loading'}>
+              {signup.kind === 'loading' ? 'Joining…' : 'Join the waitlist'}
+            </button>
           </div>
-        </div>
+          <div className="consent-row">
+            <input
+              id="waitlist-consent"
+              type="checkbox"
+              checked={consent}
+              onChange={(event) => setConsent(event.target.checked)}
+              required
+            />
+            <label htmlFor="waitlist-consent">Send me occasional Ayraweb updates. Unsubscribe anytime.</label>
+          </div>
+          <div className="form-trap" aria-hidden="true">
+            <label htmlFor="website">Leave this field empty</label>
+            <input id="website" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
+          </div>
+          <p id="waitlist-status" className={`form-status ${signup.kind}`} aria-live="polite">{signup.message}</p>
+        </form>
+
+        <section className="music" aria-label="Music player">
+          <p className="music-label">A song for the wait</p>
+          <iframe
+            title="I Wanna Be Yours by Arctic Monkeys — Spotify player"
+            src={SPOTIFY_EMBED_URL}
+            width="100%"
+            height="80"
+            loading="eager"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          />
+        </section>
       </section>
 
       <footer className="footer">

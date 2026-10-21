@@ -4,5 +4,6 @@ node_modules/
 *.tsbuildinfo
 # Local environment and secret files
 /.env*
+!/.env.example
 # Common ignores
 .DS_Store
