@@ -1,6 +1,6 @@
-# Ayraweb — Coming Soon
+# Ayra — Discord bot website
 
-A compact, single-screen Next.js landing page for Vercel, with an email waitlist form and an embedded Spotify player. The Spotify controls play the track inside the page; no Spotify redirect is used for playback.
+A minimalist, aurora-backed landing page for the Ayra Discord bot. The page uses the icon supplied by the project owner, liquid-glass invite buttons, documented command categories, and a truthful review section. It contains no fabricated usage statistics or testimonials.
 
 ## Run locally
 
@@ -9,14 +9,15 @@ pnpm install
 pnpm dev
 ```
 
-## Enable the waitlist
+## Public destinations and permissions
 
-Add these variables in Vercel Project Settings → Environment Variables:
+- Bot application ID: `1489882067239047168`
+- The invite link requests no elevated permissions by default. Server owners should review and grant only the permissions the bot needs.
+- The previously published support-server invite has expired. The page directs users to Ayra’s documented `/ticket` and `/report` commands instead.
 
-- `MAILERLITE_API_KEY` — a MailerLite API token. Keep it server-side; never use a `NEXT_PUBLIC_` prefix.
-- `MAILERLITE_GROUP_ID` — optional, to put Ayraweb signups into a dedicated MailerLite group. If omitted, subscribers are added to the account’s general list.
+## Image credit
 
-The form requires explicit consent and sends signups to MailerLite’s subscribers API. Do not commit API tokens to GitHub.
+The aurora background is by [Jonny Gios on Unsplash](https://unsplash.com/photos/a-green-and-purple-aurora-bore-in-the-night-sky-Y5HjCi2SLlE), used under the [Unsplash License](https://unsplash.com/license). The bot icon was supplied by the project owner.
 
 ## Deploy to Vercel
 

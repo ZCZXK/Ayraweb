@@ -1,111 +1,103 @@
-'use client'
+import Image from 'next/image'
 
-import { FormEvent, useState } from 'react'
+const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
 
-const SPOTIFY_EMBED_URL = 'https://open.spotify.com/embed/track/5XeFesFbtLpXzIVDNQP22n?theme=1'
+const features = [
+  { id: '01', icon: 'shield', title: 'Moderation', description: 'Keep day-to-day moderation close at hand, from warnings and mutes to bans and slowmode.', commands: ['/warn', '/mute', '/ban', '/slowmode'] },
+  { id: '02', icon: 'ticket', title: 'Tickets and reports', description: 'Give members a clear route to ask for help or bring an issue to your team.', commands: ['/ticket', '/report'] },
+  { id: '03', icon: 'grid', title: 'Server tools', description: 'Look up useful details about members, channels, roles, and your server.', commands: ['/serverinfo', '/membercount', '/roles'] },
+  { id: '04', icon: 'spark', title: 'Community', description: 'Make room for participation with giveaways, polls, reminders, and more.', commands: ['/giveaway', '/poll', '/remind'] },
+]
 
-type SignupState = { kind: 'idle' | 'loading' | 'success' | 'error'; message: string }
+function Icon({ name, className = '' }: { name: string; className?: string }) {
+  const common = { className, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true as const }
+  if (name === 'shield') return <svg {...common}><path d="M12 3.25 19 6v5.3c0 4.35-2.9 7.65-7 9.45-4.1-1.8-7-5.1-7-9.45V6l7-2.75Z"/><path d="m9 12 2 2 4-4"/></svg>
+  if (name === 'ticket') return <svg {...common}><path d="M4 7.25A2.25 2.25 0 0 1 6.25 5h11.5A2.25 2.25 0 0 1 20 7.25v2a2.75 2.75 0 0 0 0 5.5v2A2.25 2.25 0 0 1 17.75 19H6.25A2.25 2.25 0 0 1 4 16.75v-2a2.75 2.75 0 0 0 0-5.5v-2Z"/><path d="M9 8.5v1M9 12v1M9 15.5v.01"/></svg>
+  if (name === 'grid') return <svg {...common}><rect x="4" y="4" width="6" height="6" rx="1.3"/><rect x="14" y="4" width="6" height="6" rx="1.3"/><rect x="4" y="14" width="6" height="6" rx="1.3"/><rect x="14" y="14" width="6" height="6" rx="1.3"/></svg>
+  if (name === 'spark') return <svg {...common}><path d="M12 3.5 14 9l5.5 2-5.5 2-2 5.5L10 13l-5.5-2L10 9l2-5.5Z"/><path d="m19 15 .85 2.15L22 18l-2.15.85L19 21l-.85-2.15L16 18l2.15-.85L19 15Z"/></svg>
+  if (name === 'arrow') return <svg {...common}><path d="M7 17 17 7M8 7h9v9"/></svg>
+  if (name === 'discord') return <svg {...common}><path d="M7 7.2a14 14 0 0 1 3-.9l.45.9a11 11 0 0 1 3.1 0l.45-.9a14 14 0 0 1 3 .9c1.8 2.6 2.55 5.15 2.3 7.65a12 12 0 0 1-3.65 1.85l-.8-1.3c.5-.18.98-.42 1.42-.7-2.75 1.28-5.82 1.28-8.55 0 .44.28.91.52 1.42.7l-.8 1.3a12 12 0 0 1-3.65-1.85C4.95 12.35 5.7 9.8 7 7.2Z"/><path d="M9 12h.01M15 12h.01" strokeWidth="2.4"/></svg>
+  return <svg {...common}><path d="M5 7.5h14M5 12h9M5 16.5h6"/><path d="m16 15 2 2 4-4"/></svg>
+}
 
 export default function Home() {
-  const [email, setEmail] = useState('')
-  const [consent, setConsent] = useState(false)
-  const [website, setWebsite] = useState('')
-  const [signup, setSignup] = useState<SignupState>({ kind: 'idle', message: '' })
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (signup.kind === 'loading') return
-
-    setSignup({ kind: 'loading', message: '' })
-    try {
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, consent, website }),
-      })
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Could not add you right now. Please try again.')
-      }
-
-      setEmail('')
-      setConsent(false)
-      setWebsite('')
-      setSignup({ kind: 'success', message: 'You’re on the list. Thanks for being here.' })
-    } catch (error) {
-      setSignup({
-        kind: 'error',
-        message: error instanceof Error ? error.message : 'Could not add you right now. Please try again.',
-      })
-    }
-  }
-
   return (
-    <main className="landing">
-      <header className="masthead">
-        <a className="wordmark" href="#top" aria-label="Ayraweb home">ayraweb<span>.</span></a>
-        <p className="status"><span /> Coming soon</p>
+    <main className="site-shell">
+      <div className="aurora-layer" aria-hidden="true" />
+      <header className="site-header">
+        <a className="brand" href="#home" aria-label="Ayra home">
+          <Image src="/bot-icon.png" alt="" width={42} height={42} className="brand-icon" priority />
+          <span className="brand-name">AYRA<span className="brand-period">.</span></span>
+        </a>
+        <nav className="main-nav" aria-label="Main navigation">
+          <a href="#features">Features</a><a href="#reviews">Reviews</a><a href="#support">Support</a>
+        </nav>
+        <a className="glass-button glass-button--small" href={INVITE_URL} target="_blank" rel="noopener noreferrer">
+          <Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" />
+        </a>
       </header>
 
-      <section className="main-content" id="top" aria-labelledby="hero-title">
-        <p className="eyebrow">A note from Ayraweb</p>
-        <h1 id="hero-title">Something<br /><em>beautiful</em> is coming.</h1>
-        <p className="description">We’re making a new home for Ayraweb. Leave your email and we’ll let you know when it’s ready.</p>
-
-        <form className="waitlist" onSubmit={handleSubmit}>
-          <label className="visually-hidden" htmlFor="waitlist-email">Email address</label>
-          <div className="email-row">
-            <input
-              id="waitlist-email"
-              type="email"
-              name="email"
-              autoComplete="email"
-              inputMode="email"
-              placeholder="Your email address"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              required
-              maxLength={254}
-              aria-describedby="waitlist-consent waitlist-status"
-            />
-            <button type="submit" disabled={!consent || signup.kind === 'loading'}>
-              {signup.kind === 'loading' ? 'Joining…' : 'Join the waitlist'}
-            </button>
+      <section className="hero" id="home" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="eyebrow"><span className="eyebrow-line" /> Discord bot for thoughtful communities</p>
+          <h1 id="hero-title">More order.<br /><em>More room</em> to grow.</h1>
+          <p className="hero-description">Ayra brings moderation, member support, and everyday server tools together in one place.</p>
+          <div className="hero-actions">
+            <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra to your server</span><Icon name="arrow" className="button-arrow" /></a>
+            <a className="text-link" href="#features">Explore features <span aria-hidden="true">↘</span></a>
           </div>
-          <div className="consent-row">
-            <input
-              id="waitlist-consent"
-              type="checkbox"
-              checked={consent}
-              onChange={(event) => setConsent(event.target.checked)}
-              required
-            />
-            <label htmlFor="waitlist-consent">Send me occasional Ayraweb updates. Unsubscribe anytime.</label>
-          </div>
-          <div className="form-trap" aria-hidden="true">
-            <label htmlFor="website">Leave this field empty</label>
-            <input id="website" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
-          </div>
-          <p id="waitlist-status" className={`form-status ${signup.kind}`} aria-live="polite">{signup.message}</p>
-        </form>
-
-        <section className="music" aria-label="Music player">
-          <p className="music-label">A song for the wait</p>
-          <iframe
-            title="I Wanna Be Yours by Arctic Monkeys — Spotify player"
-            src={SPOTIFY_EMBED_URL}
-            width="100%"
-            height="80"
-            loading="eager"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          />
-        </section>
+          <p className="permission-note">Review the requested permissions in Discord before adding the bot.</p>
+        </div>
+        <div className="hero-art" aria-label="Ayra bot icon">
+          <div className="art-orbit art-orbit--one" aria-hidden="true" /><div className="art-orbit art-orbit--two" aria-hidden="true" />
+          <div className="icon-frame"><Image src="/bot-icon.png" alt="Ayra bot icon" width={176} height={176} className="hero-icon" priority /></div>
+          <div className="icon-caption"><span className="caption-rule" /> AYRA · DISCORD BOT</div>
+        </div>
       </section>
 
-      <footer className="footer">
-        <span>© 2026 Ayraweb</span>
-        <span>See you soon.</span>
+      <section className="section features-section" id="features" aria-labelledby="features-title">
+        <div className="section-heading">
+          <div><p className="eyebrow"><span className="eyebrow-line" /> What Ayra does</p><h2 id="features-title">Useful by design.</h2></div>
+          <p>Tools documented for Ayra, without inflated counts or promises.</p>
+        </div>
+        <div className="feature-grid">
+          {features.map((feature) => (
+            <article className="feature-card glass-panel" key={feature.id}>
+              <div className="feature-topline"><span className="feature-index">{feature.id}</span><Icon name={feature.icon} className="feature-icon" /></div>
+              <h3>{feature.title}</h3><p>{feature.description}</p>
+              <div className="command-list" aria-label={`${feature.title} commands`}>{feature.commands.map((command) => <code key={command}>{command}</code>)}</div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section reviews-section" id="reviews" aria-labelledby="reviews-title">
+        <div className="review-mark" aria-hidden="true"><Icon name="quote" /></div>
+        <div className="review-copy">
+          <p className="eyebrow"><span className="eyebrow-line" /> Community feedback</p>
+          <h2 id="reviews-title">Reviews, honestly.</h2>
+          <p>No public reviews are available yet. We’ll only feature feedback we can verify—never made-up testimonials or ratings.</p>
+          <a className="text-link" href={INVITE_URL} target="_blank" rel="noopener noreferrer">Try Ayra yourself <Icon name="arrow" className="inline-arrow" /></a>
+        </div>
+        <div className="review-status glass-panel"><span className="status-dot" /> No public reviews yet</div>
+      </section>
+
+      <section className="section support-section" id="support" aria-labelledby="support-title">
+        <div className="support-copy">
+          <p className="eyebrow"><span className="eyebrow-line" /> Support</p>
+          <h2 id="support-title">Help, when<br /><em>you need it.</em></h2>
+          <p>In a server where Ayra is installed, use <code>/ticket</code> to ask for help or <code>/report</code> to flag an issue. You can also add Ayra to your server to use its documented support commands.</p>
+        </div>
+        <div className="support-actions">
+          <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
+          <a className="glass-button glass-button--quiet" href="#features"><span>View features</span><Icon name="arrow" className="button-arrow" /></a>
+        </div>
+      </section>
+
+      <footer className="site-footer">
+        <a className="footer-brand" href="#home"><Image src="/bot-icon.png" alt="" width={28} height={28} /> AYRA</a>
+        <span>Built for the people behind the server.</span>
+        <div className="footer-links"><a href="#features">Features</a><a href="#reviews">Reviews</a><a href="#support">Support</a></div>
       </footer>
     </main>
   )

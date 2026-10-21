@@ -3,14 +3,14 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Ayraweb — Coming Soon',
-  description: 'Something beautiful is coming. Stay for a song while Ayraweb takes shape.',
-  icons: { icon: '/icon.svg' },
+  title: 'Ayra — Discord Bot',
+  description: 'Ayra brings moderation, member support, and everyday server tools together for Discord communities.',
+  icons: { icon: '/bot-icon.png' },
 }
 
 export const viewport: Viewport = {
   colorScheme: 'dark',
-  themeColor: '#100d0c',
+  themeColor: '#05070a',
 }
 
 export default function RootLayout({
