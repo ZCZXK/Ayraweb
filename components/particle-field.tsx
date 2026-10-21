@@ -40,15 +40,15 @@ export function ParticleField() {
       canvas.style.height = `${height}px`
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
 
-      const count = Math.min(68, Math.max(18, Math.floor((width * height) / 28000)))
-      const colors = ['200,255,224', '216,197,255']
+      const count = Math.min(78, Math.max(18, Math.floor((width * height) / 24000)))
+      const colors = ['200,255,224', '216,197,255', '146,225,255']
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.18,
-        vy: (Math.random() - 0.5) * 0.18,
-        radius: 0.7 + Math.random() * 1.1,
-        opacity: 0.18 + Math.random() * 0.25,
+        vx: (Math.random() - 0.5) * 0.22,
+        vy: (Math.random() - 0.5) * 0.22,
+        radius: 0.8 + Math.random() * 1.3,
+        opacity: 0.22 + Math.random() * 0.3,
         phase: Math.random() * Math.PI * 2,
         color: colors[Math.floor(Math.random() * colors.length)],
       }))
@@ -74,15 +74,15 @@ export function ParticleField() {
           const dx = particle.x - pointer.x
           const dy = particle.y - pointer.y
           const distance = Math.hypot(dx, dy)
-          if (distance > 0 && distance < 145) {
-            const proximity = 1 - distance / 145
-            const force = proximity * 0.42 * step
+          if (distance > 0 && distance < 170) {
+            const proximity = 1 - distance / 170
+            const force = proximity * 0.52 * step
             particle.x += (dx / distance) * force
             particle.y += (dy / distance) * force
             context.beginPath()
             context.moveTo(particle.x, particle.y)
             context.lineTo(pointer.x, pointer.y)
-            context.strokeStyle = `rgba(${particle.color},${proximity * 0.16})`
+            context.strokeStyle = `rgba(${particle.color},${proximity * 0.2})`
             context.lineWidth = 0.7
             context.stroke()
           }
