@@ -16,7 +16,7 @@ function toDataUri(bytes: Uint8Array, mediaType: string) {
 export default async function OpenGraphImage() {
   const [logoResponse, auroraResponse] = await Promise.all([
     fetch('https://ayrabot.fun/bot-icon.png'),
-    fetch('https://ayrabot.fun/aurora-bg.jpg'),
+    fetch('https://ayrabot.fun/aurora-bg.webp'),
   ])
   if (!logoResponse.ok || !auroraResponse.ok) {
     throw new Error('Unable to load Ayra assets for the social preview.')
@@ -27,7 +27,7 @@ export default async function OpenGraphImage() {
     auroraResponse.arrayBuffer(),
   ])
   const logo = toDataUri(new Uint8Array(logoBytes), 'image/png')
-  const aurora = toDataUri(new Uint8Array(auroraBytes), 'image/jpeg')
+  const aurora = toDataUri(new Uint8Array(auroraBytes), 'image/webp')
 
   return new ImageResponse(
     (

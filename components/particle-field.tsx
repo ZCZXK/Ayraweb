@@ -18,11 +18,12 @@ export function ParticleField() {
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const context = canvas?.getContext('2d')
+    const context = canvas?.getContext('2d', { alpha: true })
     if (!canvas || !context) return
 
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
     const pointer = { x: 0, y: 0, active: false }
+    const frameInterval = 1000 / 30
     let width = 0
     let height = 0
     let pixelRatio = 1
@@ -33,14 +34,14 @@ export function ParticleField() {
     const resize = () => {
       width = window.innerWidth
       height = window.innerHeight
-      pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5)
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 1.25)
       canvas.width = Math.round(width * pixelRatio)
       canvas.height = Math.round(height * pixelRatio)
       canvas.style.width = `${width}px`
       canvas.style.height = `${height}px`
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
 
-      const count = Math.min(78, Math.max(18, Math.floor((width * height) / 24000)))
+      const count = Math.min(52, Math.max(14, Math.floor((width * height) / 32000)))
       const colors = ['200,255,224', '216,197,255', '146,225,255']
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * width,
@@ -56,6 +57,15 @@ export function ParticleField() {
 
     const draw = (time: number) => {
       frame = 0
+      if (document.hidden) {
+        lastFrame = 0
+        return
+      }
+      if (!motionPreference.matches && lastFrame && time - lastFrame < frameInterval) {
+        frame = window.requestAnimationFrame(draw)
+        return
+      }
+
       const step = lastFrame ? Math.min((time - lastFrame) / 16.67, 2) : 1
       lastFrame = time
       context.clearRect(0, 0, width, height)
@@ -73,8 +83,9 @@ export function ParticleField() {
         if (pointer.active && !motionPreference.matches) {
           const dx = particle.x - pointer.x
           const dy = particle.y - pointer.y
-          const distance = Math.hypot(dx, dy)
-          if (distance > 0 && distance < 170) {
+          const distanceSquared = dx * dx + dy * dy
+          if (distanceSquared > 0 && distanceSquared < 170 * 170) {
+            const distance = Math.sqrt(distanceSquared)
             const proximity = 1 - distance / 170
             const force = proximity * 0.52 * step
             particle.x += (dx / distance) * force
@@ -104,17 +115,27 @@ export function ParticleField() {
       pointer.y = event.clientY
       pointer.active = true
     }
-
+    const handlePointerLeave = () => { pointer.active = false }
     const handleBlur = () => { pointer.active = false }
     const handleResize = () => {
       if (frame) window.cancelAnimationFrame(frame)
       resize()
       lastFrame = 0
-      draw(performance.now())
+      if (!document.hidden) draw(performance.now())
     }
     const handleMotionChange = () => {
       if (frame) window.cancelAnimationFrame(frame)
       pointer.active = false
+      lastFrame = 0
+      if (!document.hidden) draw(performance.now())
+    }
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (frame) window.cancelAnimationFrame(frame)
+        frame = 0
+        lastFrame = 0
+        return
+      }
       lastFrame = 0
       draw(performance.now())
     }
@@ -123,14 +144,18 @@ export function ParticleField() {
     draw(performance.now())
     window.addEventListener('resize', handleResize, { passive: true })
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
+    window.addEventListener('pointerleave', handlePointerLeave, { passive: true })
     window.addEventListener('blur', handleBlur)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
     motionPreference.addEventListener('change', handleMotionChange)
 
     return () => {
       if (frame) window.cancelAnimationFrame(frame)
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('pointermove', handlePointerMove)
+      window.removeEventListener('pointerleave', handlePointerLeave)
       window.removeEventListener('blur', handleBlur)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
       motionPreference.removeEventListener('change', handleMotionChange)
     }
   }, [])

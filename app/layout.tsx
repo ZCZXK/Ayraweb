@@ -25,10 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: "try { const root = document.documentElement; if (localStorage.getItem('ayra-theme') === 'light') root.dataset.theme = 'light'; if (location.pathname === '/' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) { root.classList.add('home-loading'); const finish = () => window.setTimeout(() => root.classList.remove('home-loading'), 700); if (document.readyState === 'complete') finish(); else window.addEventListener('load', finish, { once: true }); window.setTimeout(() => root.classList.remove('home-loading'), 4000); } } catch {}" }} />
+        <script dangerouslySetInnerHTML={{ __html: "try { const root = document.documentElement; if (localStorage.getItem('ayra-theme') === 'light') root.dataset.theme = 'light'; if (location.pathname === '/' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) { root.classList.add('home-loading'); const finish = () => root.classList.remove('home-loading'); if (document.readyState === 'complete') finish(); else window.addEventListener('load', finish, { once: true }); window.setTimeout(finish, 3000); } } catch {}" }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Pacifico&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Kaushan+Script&family=Manrope:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet" />
       </head>
       <body>
         {children}
