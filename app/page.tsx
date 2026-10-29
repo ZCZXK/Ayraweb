@@ -9,7 +9,7 @@ import { allCommands } from '../data/command-catalog'
 
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
 const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
-const SUPPORT_EMAIL = 'support@ayrabot.fun'
+const SUPPORT_EMAIL = 'flewd7560@gmail.com'
 
 export const metadata: Metadata = {
   title: 'Ayra — Discord Bot',
@@ -66,7 +66,7 @@ export default function Home() {
 
       <aside className="domain-sale-notice" aria-label="ayrabot.fun domain for sale">
         <p className="domain-sale-copy"><span className="domain-sale-label">Domain for sale</span><span><strong>ayrabot.fun</strong> is available</span></p>
-        <a className="glass-button glass-button--small domain-sale-link" href="mailto:support@ayrabot.fun?subject=Offer%20for%20ayrabot.fun">Make an offer<Icon name="arrow" className="button-arrow" /></a>
+        <a className="glass-button glass-button--small domain-sale-link" href={`mailto:${SUPPORT_EMAIL}?subject=Offer%20for%20ayrabot.fun`}>Make an offer<Icon name="arrow" className="button-arrow" /></a>
       </aside>
 
       <section className="hero" id="home" aria-labelledby="hero-title">

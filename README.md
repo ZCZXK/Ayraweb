@@ -13,7 +13,7 @@ pnpm dev
 
 - Bot invite: application ID `1489882067239047168` (no elevated permissions requested by default)
 - Support server: <https://discord.gg/GEPmvs57Yx>
-- Email support: <mailto:support@ayrabot.fun>
+- Email support: <mailto:flewd7560@gmail.com>
 - Privacy: `/privacy`
 - Terms: `/terms`
 

@@ -23,7 +23,7 @@ export default function TermsPage() {
       </section>
       <section>
         <h2>Contact</h2>
-        <p>Questions about these terms? Email <a href="mailto:support@ayrabot.fun">support@ayrabot.fun</a> or contact us through the <a href="https://discord.gg/GEPmvs57Yx" target="_blank" rel="noopener noreferrer">Ayra support server</a>.</p>
+        <p>Questions about these terms? Email <a href="mailto:flewd7560@gmail.com">flewd7560@gmail.com</a> or contact us through the <a href="https://discord.gg/GEPmvs57Yx" target="_blank" rel="noopener noreferrer">Ayra support server</a>.</p>
       </section>
     </LegalPage>
   )
