@@ -13,19 +13,19 @@ const SUPPORT_EMAIL = 'support@ayrabot.fun'
 
 export const metadata: Metadata = {
   title: 'Ayra — Discord Bot',
-  description: 'Moderation, tickets, and community tools for Discord servers.',
+  description: 'Moderation, tickets, and community tools for Discord servers. The ayrabot.fun domain is available for offers.',
   openGraph: {
     type: 'website',
     url: 'https://ayrabot.fun/',
     siteName: 'Ayra',
     title: 'Ayra — Discord Bot',
-    description: 'Moderation, tickets, and community tools for Discord servers.',
+    description: 'Moderation, tickets, and community tools for Discord servers. The ayrabot.fun domain is available for offers.',
     images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Ayra Discord bot' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Ayra — Discord Bot',
-    description: 'Moderation, tickets, and community tools for Discord servers.',
+    description: 'Moderation, tickets, and community tools for Discord servers. The ayrabot.fun domain is available for offers.',
     images: ['/opengraph-image'],
   },
 }
@@ -63,6 +63,11 @@ export default function Home() {
         <ThemeToggle />
         <a className="glass-button glass-button--small" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
       </header>
+
+      <aside className="domain-sale-notice" aria-label="ayrabot.fun domain for sale">
+        <p className="domain-sale-copy"><span className="domain-sale-label">Domain for sale</span><span><strong>ayrabot.fun</strong> is available</span></p>
+        <a className="glass-button glass-button--small domain-sale-link" href="mailto:support@ayrabot.fun?subject=Offer%20for%20ayrabot.fun">Make an offer<Icon name="arrow" className="button-arrow" /></a>
+      </aside>
 
       <section className="hero" id="home" aria-labelledby="hero-title">
         <div className="hero-copy" data-reveal="left">
