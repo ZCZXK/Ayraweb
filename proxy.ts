@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const SUPPORT_HOST = 'support.ayrabot.fun'
-const DISCORD_INVITE = 'https://discord.gg/GEPmvs57Yx'
+const REDIRECTS: Record<string, string> = {
+  'support.ayrabot.fun': 'https://discord.gg/GEPmvs57Yx',
+  'snicker.ayrabot.fun': 'https://discord.gg/h9PA5Upekj',
+}
 
 export function proxy(request: NextRequest) {
-  if (request.nextUrl.hostname.toLowerCase() === SUPPORT_HOST) {
-    return NextResponse.redirect(DISCORD_INVITE, 302)
+  const destination = REDIRECTS[request.nextUrl.hostname.toLowerCase()]
+
+  if (destination) {
+    return NextResponse.redirect(destination, 302)
   }
 
   return NextResponse.next()
