@@ -18,6 +18,7 @@ export default function PrivacyPage() {
         <h2>Use and service providers</h2>
         <p>Ayra uses this data to run requested bot features and configured server logs. The bot uses a local SQLite database on its host, rather than a separate database provider. Discord processes bot interactions, and Render hosts the bot service. We do not sell user data.</p>
         <p>The website uses Vercel Analytics in production and loads fonts from Google Fonts. Google handles font requests under its own policies, including <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google’s Privacy Policy</a>.</p>
+        <p>When a social app requests a preview for an Ayra Discord invite link, the website may query Discord’s public Invite API for the invite’s current server name and icon. This server-side lookup uses the public invite code, does not send visitor account credentials to Discord, and may be cached by Vercel for up to five minutes.</p>
       </section>
       <section>
         <h2>Retention and deletion</h2>

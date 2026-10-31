@@ -1,15 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getRedirectLinkByHost } from './lib/redirect-links'
 
-const REDIRECTS: Record<string, string> = {
-  'support.ayrabot.fun': 'https://discord.gg/GEPmvs57Yx',
-  'snicker.ayrabot.fun': 'https://discord.gg/h9PA5Upekj',
-}
+const PREVIEW_CRAWLER = /discordbot|whatsapp|facebookexternalhit|facebot|twitterbot|slackbot|telegrambot|linkedinbot|skypeuripreview/i
 
 export function proxy(request: NextRequest) {
-  const destination = REDIRECTS[request.nextUrl.hostname.toLowerCase()]
+  const link = getRedirectLinkByHost(request.nextUrl.hostname)
 
-  if (destination) {
-    return NextResponse.redirect(destination, 302)
+  if (link) {
+    const userAgent = request.headers.get('user-agent') ?? ''
+
+    if (request.method === 'GET' && PREVIEW_CRAWLER.test(userAgent)) {
+      const forwardedHeaders = new Headers(request.headers)
+      forwardedHeaders.set(
+        'x-ayra-share-url',
+        `https://${link.hostname}${request.nextUrl.pathname}`,
+      )
+
+      return NextResponse.rewrite(
+        new URL(`/share/${link.slug}`, request.url),
+        { request: { headers: forwardedHeaders } },
+      )
+    }
+
+    return NextResponse.redirect(link.destination, 302)
   }
 
   return NextResponse.next()
