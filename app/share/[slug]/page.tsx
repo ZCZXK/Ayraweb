@@ -1,94 +1,56 @@
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { getDiscordServerPreview } from '@/lib/discord-invite'
+import { DiscordInvitePreview } from '@/components/discord-invite-preview'
 import { getRedirectLinkBySlug } from '@/lib/redirect-links'
+import { findManagedRedirectBySlug } from '@/lib/redirect-store'
+import { createDiscordShareMetadata } from '@/lib/share-preview'
+
+export const dynamic = 'force-dynamic'
 
 type SharePageProps = {
   params: Promise<{ slug: string }>
 }
 
-function getCanonicalUrl(value: string | null, hostname: string) {
-  const fallback = `https://${hostname}/`
-  if (!value) return fallback
-
+function canonicalUrl(value: string | null, fallback: string) {
   try {
-    const candidate = new URL(value)
-    if (
-      candidate.protocol === 'https:' &&
-      candidate.hostname.toLowerCase() === hostname.toLowerCase()
-    ) {
+    const candidate = new URL(value ?? '')
+    const expected = new URL(fallback)
+    if (candidate.protocol === 'https:' && candidate.hostname.toLowerCase() === expected.hostname.toLowerCase()) {
       return candidate.toString()
     }
   } catch {
-    // Use the known Ayra short-link host when the incoming URL is invalid.
+    // Fall back to a known Ayra short-link URL.
   }
-
   return fallback
+}
+
+async function findShareTarget(slug: string) {
+  const legacy = getRedirectLinkBySlug(slug)
+  if (legacy) return { destination: legacy.destination, fallback: `https://${legacy.hostname}/` }
+
+  const managed = await findManagedRedirectBySlug(slug)
+  if (!managed) return null
+  const fallback = managed.mode === 'subdomain'
+    ? `https://${managed.slug}.ayrabot.fun/`
+    : `https://www.ayrabot.fun/go/${managed.slug}`
+  return { destination: managed.destination, fallback }
 }
 
 export async function generateMetadata({ params }: SharePageProps): Promise<Metadata> {
   const { slug } = await params
-  const link = getRedirectLinkBySlug(slug)
-  if (!link) {
-    return {
-      title: 'Link not found | Ayra',
-      robots: { index: false, follow: false },
-    }
+  const target = await findShareTarget(slug)
+  if (!target) {
+    return { title: 'Link not found | Ayra', robots: { index: false, follow: false } }
   }
 
-  const server = await getDiscordServerPreview(link.destination)
-  const title = server ? `Join ${server.name} on Discord` : 'Join this Discord server'
-  const description = server
-    ? `You're invited to join ${server.name} on Discord.`
-    : 'Open this invitation to join the Discord server.'
-  const shareUrl = getCanonicalUrl(
-    (await headers()).get('x-ayra-share-url'),
-    link.hostname,
-  )
-  const image = server?.iconUrl ?? 'https://ayrabot.fun/bot-icon.png'
-
-  return {
-    metadataBase: new URL(shareUrl),
-    title,
-    description,
-    alternates: { canonical: shareUrl },
-    robots: { index: false, follow: false },
-    openGraph: {
-      type: 'website',
-      siteName: 'Ayra',
-      url: shareUrl,
-      title,
-      description,
-      images: [{ url: image, width: 512, height: 512, alt: server ? `${server.name} Discord server icon` : 'Ayra' }],
-    },
-    twitter: {
-      card: 'summary',
-      title,
-      description,
-      images: [image],
-    },
-  }
+  const shareUrl = canonicalUrl((await headers()).get('x-ayra-share-url'), target.fallback)
+  return createDiscordShareMetadata(target.destination, shareUrl)
 }
 
 export default async function SharePreviewPage({ params }: SharePageProps) {
   const { slug } = await params
-  const link = getRedirectLinkBySlug(slug)
-  if (!link) notFound()
-
-  const server = await getDiscordServerPreview(link.destination)
-  const serverName = server?.name ?? 'Discord server'
-  const iconUrl = server?.iconUrl ?? 'https://ayrabot.fun/bot-icon.png'
-
-  return (
-    <main className="share-preview-page">
-      <section className="share-preview-card">
-        <img src={iconUrl} alt={`${serverName} server icon`} width={112} height={112} />
-        <p className="share-preview-eyebrow">Discord invitation</p>
-        <h1>Join {serverName}</h1>
-        <p>Open the invitation to view and join this Discord server.</p>
-        <a href={link.destination} rel="noreferrer">Open Discord invite</a>
-      </section>
-    </main>
-  )
+  const target = await findShareTarget(slug)
+  if (!target) notFound()
+  return <DiscordInvitePreview destination={target.destination} />
 }
