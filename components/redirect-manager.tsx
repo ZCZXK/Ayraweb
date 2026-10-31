@@ -198,7 +198,7 @@ export function RedirectManager({ initialLinks }: { initialLinks: RedirectRow[] 
           </div>
         </section>
 
-        <p className="admin-footnote">Invite previews use Discord’s current server icon and approximate counts when available.</p>
+        <p className="admin-footnote">Invite previews use the current Discord server name and icon, without member counts.</p>
       </div>
     </main>
   )

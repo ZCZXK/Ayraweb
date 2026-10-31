@@ -23,7 +23,7 @@ On production, open `/admin/login` and sign in with the authorized Discord accou
 
 The Vercel project must have `DISCORD_CLIENT_SECRET` and `DISCORD_ADMIN_USER_ID` configured for Production, and the Discord OAuth application must register `https://ayrabot.fun/api/auth/discord/callback`. The private Blob store `ayra-redirects` must remain connected to the `ayraweb` project. Do not put OAuth credentials or Blob tokens in this repository or client-side code.
 
-Shared invite URLs use Discord’s public invite metadata for the server icon and approximate member/online counts when available. Human visitors are sent directly to the Discord invite.
+Shared invite URLs use Discord’s public invite metadata for the current server name and icon, without requesting or displaying member counts. Human visitors are sent directly to the Discord invite.
 
 ## Image credit
 

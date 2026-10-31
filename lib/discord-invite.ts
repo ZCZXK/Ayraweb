@@ -4,24 +4,15 @@ type DiscordInvite = {
     name?: string
     icon?: string | null
   }
-  approximate_member_count?: number
-  approximate_presence_count?: number
 }
 
 export type DiscordServerPreview = {
   name: string
   iconUrl: string
-  guildId: string
-  memberCount?: number
-  onlineCount?: number
 }
 
 const FALLBACK_ICON = 'https://ayrabot.fun/bot-icon.png'
 const INVITE_HOSTS = new Set(['discord.gg', 'discord.com', 'www.discord.com'])
-const compactNumber = new Intl.NumberFormat('en-US', {
-  notation: 'compact',
-  maximumFractionDigits: 1,
-})
 
 export function getDiscordInviteCode(destination: string) {
   try {
@@ -42,17 +33,6 @@ export function getDiscordInviteCode(destination: string) {
   }
 }
 
-export function formatDiscordCounts(server: DiscordServerPreview | null | undefined) {
-  if (!server) return ''
-  const members = typeof server.memberCount === 'number'
-    ? `~${compactNumber.format(server.memberCount)} members`
-    : ''
-  const online = typeof server.onlineCount === 'number'
-    ? `~${compactNumber.format(server.onlineCount)} online`
-    : ''
-  return [members, online].filter(Boolean).join(' · ')
-}
-
 function formatServerName(name: string) {
   const cleaned = name.trim().replace(/^\/+/, '').trim()
   return cleaned ? cleaned.charAt(0).toLocaleUpperCase('en-US') + cleaned.slice(1) : name
@@ -64,7 +44,7 @@ export async function getDiscordServerPreview(destination: string): Promise<Disc
 
   try {
     const response = await fetch(
-      `https://discord.com/api/v10/invites/${encodeURIComponent(inviteCode)}?with_counts=true`,
+      `https://discord.com/api/v10/invites/${encodeURIComponent(inviteCode)}`,
       {
         headers: {
           Accept: 'application/json',
@@ -90,14 +70,7 @@ export async function getDiscordServerPreview(destination: string): Promise<Disc
 
     return {
       name: formatServerName(guild.name),
-      guildId: guild.id,
       iconUrl,
-      memberCount: Number.isSafeInteger(invite.approximate_member_count) && (invite.approximate_member_count ?? -1) >= 0
-        ? invite.approximate_member_count
-        : undefined,
-      onlineCount: Number.isSafeInteger(invite.approximate_presence_count) && (invite.approximate_presence_count ?? -1) >= 0
-        ? invite.approximate_presence_count
-        : undefined,
     }
   } catch {
     return null
