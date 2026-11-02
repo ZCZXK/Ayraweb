@@ -22,6 +22,10 @@ export default function PrivacyPage() {
         <p>The owner-only redirect manager uses Discord OAuth with the identify scope to verify the site owner’s account. It stores short-link slugs and their Discord invite destinations in a private Vercel Blob store. The public redirect URL and its destination are visible to people who receive that link; the private storage object and management controls are not public. A signed seven-day session cookie keeps the owner signed in. The manager does not request access to a user’s servers or messages.</p>
       </section>
       <section>
+        <h2>Advertising</h2>
+        <p>The public website uses Google AdSense to serve advertisements. Google and other third-party vendors may use advertising cookies to show ads based on your prior visits to this site or other websites. Review Google’s <a href="https://support.google.com/adsense/answer/9012903?hl=en-GB" target="_blank" rel="noopener noreferrer">AdSense ad technology provider list</a> for information about potential ad partners. You can manage personalized advertising in <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer">Google Ads Settings</a> or opt out of some third-party vendors’ personalized advertising at <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">aboutads.info</a>. For more information, see <a href="https://policies.google.com/technologies/ads?hl=en" target="_blank" rel="noopener noreferrer">Google’s advertising privacy information</a>.</p>
+      </section>
+      <section>
         <h2>Retention and deletion</h2>
         <p>The bot code has no automatic time-based deletion schedule. Closing a ticket removes its Discord channel but leaves ticket metadata in the database. Other records remain until cleared by a feature or the database is removed.</p>
         <p>The reviewed Render configuration uses a free service without a persistent disk, so its local database may be reset when the service is replaced or redeployed. Redirect mappings remain in private Vercel Blob storage until the owner removes them. No fixed retention period is promised for bot records.</p>

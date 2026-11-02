@@ -13,3 +13,5 @@
 - [x] **Search-friendly bot identity:** Add concise, crawlable homepage text explaining what Ayra is and the verified features it provides. Use the existing Ayra logo in a stable square favicon image with a circular appearance and link it from the homepage metadata. Do not add invented pricing, review scores, usage counts, or guarantees of Google AI Overview inclusion.
 
 - [x] **Public crawler routes:** Serve `/robots.txt` and `/sitemap.xml` successfully on `www.ayrabot.fun`. Allow crawling of public pages, disallow `/admin` and `/api` paths including nested routes, and include only the homepage and public legal pages in the sitemap using canonical `www.ayrabot.fun` URLs.
+
+- [x] **AdSense code and privacy disclosure:** Load the supplied asynchronous AdSense script with publisher ID `ca-pub-9689577732033240` on public site pages, preserve anonymous cross-origin mode, keep it off private admin pages, and disclose Google/third-party ad cookies with links to user controls in the Privacy Policy. Do not claim a consent platform or ad placements are configured.
