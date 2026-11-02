@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import { LegalPage } from '../../components/legal-page'
-
+import { LegalPage } from '../../../components/legal-page'
 export const metadata: Metadata = {
   title: 'Terms of Service — Ayra',
   description: 'Terms for using the Ayra Discord bot.',

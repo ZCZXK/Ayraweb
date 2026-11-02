@@ -36,3 +36,5 @@ The relevant implementation files are `app/layout.tsx`, `app/page.tsx`, `app/glo
 ## AdSense integration
 
 Load the supplied publisher script from the shared Next.js layout on public routes only, not owner-only `/admin` pages. Update `/privacy` with a factual disclosure of AdSense cookies, third-party ad vendors, and available user controls. Do not add ad slots, claim the consent platform is configured, or change AdSense account settings; flag Google's regional certified-CMP requirement when relevant.
+
+Verification refinement: Render the literal AdSense `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9689577732033240" crossorigin="anonymous">` from `app/(public)/layout.tsx` as server-rendered markup, so it is present verbatim in page source for Google verification. Keep admin and API routes outside this public route group; route-group moves must not change public URLs.

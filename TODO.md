@@ -14,4 +14,4 @@
 
 - [x] **Public crawler routes:** Serve `/robots.txt` and `/sitemap.xml` successfully on `www.ayrabot.fun`. Allow crawling of public pages, disallow `/admin` and `/api` paths including nested routes, and include only the homepage and public legal pages in the sitemap using canonical `www.ayrabot.fun` URLs.
 
-- [x] **AdSense code and privacy disclosure:** Load the supplied asynchronous AdSense script with publisher ID `ca-pub-9689577732033240` on public site pages, preserve anonymous cross-origin mode, keep it off private admin pages, and disclose Google/third-party ad cookies with links to user controls in the Privacy Policy. Do not claim a consent platform or ad placements are configured.
+- [ ] **AdSense code and privacy disclosure:** Make the exact asynchronous AdSense code from the account visible in raw source on public site pages using publisher ID `ca-pub-9689577732033240`, preserve anonymous cross-origin mode, keep it off private admin pages, and disclose Google/third-party ad cookies with links to user controls in the Privacy Policy. Do not claim a consent platform or ad placements are configured.
