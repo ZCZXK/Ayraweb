@@ -26,3 +26,9 @@ Reuse Ayra's existing minimalist aurora and liquid-glass visual language. Keep t
 - `lib/auth.ts` and `lib/redirect-store.ts`: signed sessions, slug validation, and private Blob persistence.
 - `lib/discord-invite.ts`: public Invite API metadata for the current server name and icon only.
 - `proxy.ts`: preserve fixed legacy routes, route social crawlers to HTML metadata, and rewrite wildcard aliases.
+
+## Search appearance refinement
+
+Keep the public homepage focused on Ayra rather than the domain sale: use a concise, professional title and description describing only verified Discord bot features, and add a brief visible About section with those same features in crawlable text. Keep the domain-sale notice visible to people but exclude it from Google snippets with the supported `data-nosnippet` attribute on a `section`. Use Ayra's existing mark to create a stable square PNG favicon with transparent corners around a circular field, and reference it through Next.js metadata. Publish `/robots.txt` and `/sitemap.xml` for the `www.ayrabot.fun` canonical origin; allow public pages while disallowing private `/admin/` and `/api/` paths, and list only the homepage and legal pages in the sitemap. Do not add claims about unverified pricing, ratings, or user counts, and do not promise AI Overview inclusion; follow Google's regular SEO fundamentals.
+
+The relevant implementation files are `app/layout.tsx`, `app/page.tsx`, `app/globals.css`, `app/robots.ts`, `app/sitemap.ts`, and `public/ayra-favicon.png`.

@@ -3,10 +3,10 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ayrabot.fun'),
+  metadataBase: new URL('https://www.ayrabot.fun'),
   title: 'Ayra — Discord Bot',
-  description: 'Ayra brings moderation, member support, and everyday server tools together for Discord communities.',
-  icons: { icon: '/bot-icon.png' },
+  description: 'Ayra is a Discord bot for moderation, AutoMod and anti-nuke protection, support tickets, invite tracking, giveaways, polls, member tools, and server utilities.',
+  icons: { icon: '/ayra-favicon.png', shortcut: '/ayra-favicon.png', apple: '/ayra-favicon.png' },
 }
 
 export const viewport: Viewport = {

@@ -10,22 +10,24 @@ import { allCommands } from '../data/command-catalog'
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
 const SUPPORT_URL = 'https://discord.gg/GEPmvs57Yx'
 const SUPPORT_EMAIL = 'flewd7560@gmail.com'
+const HOME_DESCRIPTION = 'Ayra is a Discord bot for moderation, AutoMod and anti-nuke protection, support tickets, invite tracking, giveaways, polls, member tools, and server utilities.'
 
 export const metadata: Metadata = {
-  title: 'Ayra — Discord Bot',
-  description: 'Moderation, tickets, and community tools for Discord servers. The ayrabot.fun domain is available for offers.',
+  title: 'Ayra Discord Bot | Moderation, Tickets & Server Tools',
+  description: HOME_DESCRIPTION,
+  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
-    url: 'https://ayrabot.fun/',
+    url: 'https://www.ayrabot.fun/',
     siteName: 'Ayra',
-    title: 'Ayra — Discord Bot',
-    description: 'Moderation, tickets, and community tools for Discord servers. The ayrabot.fun domain is available for offers.',
+    title: 'Ayra Discord Bot | Moderation, Tickets & Server Tools',
+    description: HOME_DESCRIPTION,
     images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Ayra Discord bot' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ayra — Discord Bot',
-    description: 'Moderation, tickets, and community tools for Discord servers. The ayrabot.fun domain is available for offers.',
+    title: 'Ayra Discord Bot | Moderation, Tickets & Server Tools',
+    description: HOME_DESCRIPTION,
     images: ['/opengraph-image'],
   },
 }
@@ -64,16 +66,16 @@ export default function Home() {
         <a className="glass-button glass-button--small" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
       </header>
 
-      <aside className="domain-sale-notice" aria-label="ayrabot.fun domain for sale">
+      <section className="domain-sale-notice" aria-label="ayrabot.fun domain for sale" data-nosnippet>
         <p className="domain-sale-copy"><span className="domain-sale-label">Domain for sale</span><span><strong>ayrabot.fun</strong> is available</span></p>
         <a className="glass-button glass-button--small domain-sale-link" href={`mailto:${SUPPORT_EMAIL}?subject=Offer%20for%20ayrabot.fun`}>Make an offer<Icon name="arrow" className="button-arrow" /></a>
-      </aside>
+      </section>
 
       <section className="hero" id="home" aria-labelledby="hero-title">
         <div className="hero-copy" data-reveal="left">
           <p className="eyebrow"><span className="eyebrow-line" /> Discord bot</p>
           <h1 id="hero-title">Ayra<span className="hero-title-dot">.</span></h1>
-          <p className="hero-description">Moderation, tickets, and community tools.</p>
+          <p className="hero-description">Ayra helps Discord communities manage moderation, automated protection, support tickets, invite tracking, giveaways, polls, member tools, and everyday server utilities.</p>
           <div className="hero-actions">
             <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
             <a className="glass-button glass-button--quiet" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Support server</span><Icon name="arrow" className="button-arrow" /></a>
@@ -84,6 +86,11 @@ export default function Home() {
           <div className="icon-frame"><Image src="/bot-icon.png" alt="Ayra bot icon" width={176} height={176} className="hero-icon" priority /></div>
           <div className="icon-caption"><span className="caption-rule" /> AYRA · DISCORD BOT</div>
         </div>
+      </section>
+
+      <section className="section about-section" id="about" aria-labelledby="about-title">
+        <div className="section-heading"><div><p className="eyebrow"><span className="eyebrow-line" /> About the bot</p><h2 id="about-title">What is Ayra?</h2></div></div>
+        <p className="about-copy">Ayra Bot is a multipurpose Discord bot for managing and supporting online communities. Server teams can use slash commands for moderation, AutoMod and anti-nuke protection, ticket support and reports, invite tracking, giveaways, polls, member profiles, and everyday server utilities. Administrators can configure moderation roles and protection features to fit their server.</p>
       </section>
 
       <section className="section commands-section" id="commands" aria-labelledby="commands-title">
