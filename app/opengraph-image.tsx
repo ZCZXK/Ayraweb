@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'Ayra — Discord bot for moderation, tickets, and community tools'
+export const alt = 'Ayra Discord bot for moderation, AutoMod, anti-nuke protection, tickets, and server utilities'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -77,7 +77,7 @@ export default async function OpenGraphImage() {
             Ayra<span style={{ color: '#a3f3c7' }}>.</span>
           </div>
           <div style={{ maxWidth: 570, color: 'rgba(245, 248, 246, .92)', fontSize: 29, lineHeight: 1.4 }}>
-            Moderation, tickets, and community tools.
+            Moderation, AutoMod, tickets, and server tools.
           </div>
         </div>
         <div
