@@ -3,11 +3,17 @@ import { getRedirectLinkByHost } from './lib/redirect-links'
 
 const PREVIEW_CRAWLER = /discordbot|whatsapp|facebookexternalhit|facebot|twitterbot|slackbot|telegrambot|linkedinbot|skypeuripreview/i
 const RESERVED_SUBDOMAINS = new Set([
-  'admin', 'api', 'assets', 'cdn', 'contact', 'favicon', 'ftp', 'go', 'mail', 'privacy',
+  'admin', 'api', 'assets', 'cdn', 'cf7yce', 'contact', 'cookies', 'favicon', 'ftp', 'go', 'mail', 'policy', 'privacy',
   'robots', 'share', 'sitemap', 'snicker', 'smtp', 'status', 'subdomain', 'support', 'terms', 'www',
 ])
 const DOMAIN_SUFFIX = '.ayrabot.fun'
 const VALID_ALIAS = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+const HOST_PAGES = new Map([
+  ['cf7yce.ayrabot.fun', '/portfolio'],
+  ['cookies.ayrabot.fun', '/cookies'],
+  ['policy.ayrabot.fun', '/privacy'],
+  ['terms.ayrabot.fun', '/terms'],
+])
 
 function isPreviewCrawler(request: NextRequest) {
   return request.method === 'GET' && PREVIEW_CRAWLER.test(request.headers.get('user-agent') ?? '')
@@ -23,7 +29,13 @@ function rewriteToShare(request: NextRequest, slug: string, shareUrl: string) {
 }
 
 export function proxy(request: NextRequest) {
-  const hostname = request.nextUrl.hostname.toLowerCase()
+  const hostHeader = (request.headers.get('host') ?? request.headers.get('x-forwarded-host') ?? '').split(',')[0].trim()
+  let hostname = request.nextUrl.hostname.toLowerCase()
+  try {
+    if (hostHeader) hostname = new URL(`http://${hostHeader}`).hostname.toLowerCase()
+  } catch {
+    hostname = request.nextUrl.hostname.toLowerCase()
+  }
   const isCrawler = isPreviewCrawler(request)
   const legacyLink = getRedirectLinkByHost(hostname)
 
@@ -42,6 +54,17 @@ export function proxy(request: NextRequest) {
       return rewriteToShare(request, slug, shareUrl)
     }
     return NextResponse.next()
+  }
+
+  if (hostname === 'www.ayrabot.fun' && request.method === 'GET') {
+    const legacyPath = request.nextUrl.pathname.replace(/\/+$/, '') || '/'
+    if (legacyPath === '/privacy') return NextResponse.redirect('https://policy.ayrabot.fun/', 308)
+    if (legacyPath === '/terms') return NextResponse.redirect('https://terms.ayrabot.fun/', 308)
+  }
+
+  const hostPage = HOST_PAGES.get(hostname)
+  if (hostPage && request.nextUrl.pathname === '/') {
+    return NextResponse.rewrite(new URL(hostPage, request.url))
   }
 
   if (hostname.endsWith(DOMAIN_SUFFIX) && hostname !== `ayrabot.fun`) {

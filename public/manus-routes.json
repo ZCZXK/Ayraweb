@@ -1,0 +1,10 @@
+{
+  "routes": [
+    { "path": "/", "title": "Ayra Discord Bot" },
+    { "path": "/portfolio", "title": "cf7yce Portfolio" },
+    { "path": "/cookies", "title": "Cookies and Advertising" },
+    { "path": "/privacy", "title": "Ayra Privacy Policy" },
+    { "path": "/terms", "title": "Ayra Terms of Service" },
+    { "path": "/share/:slug", "title": "Discord Invite Preview" }
+  ]
+}

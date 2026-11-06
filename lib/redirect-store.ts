@@ -21,7 +21,7 @@ export type RedirectRow = ManagedRedirect & {
 const STORAGE_PATH = 'redirect-manager/links.json'
 const MAX_LINKS = 250
 const RESERVED_SLUGS = new Set([
-  'admin', 'api', 'assets', 'cdn', 'contact', 'favicon', 'ftp', 'go', 'mail', 'privacy',
+  'admin', 'api', 'assets', 'cdn', 'cf7yce', 'contact', 'cookies', 'favicon', 'ftp', 'go', 'mail', 'policy', 'privacy',
   'robots', 'share', 'sitemap', 'snicker', 'smtp', 'status', 'subdomain', 'support', 'terms',
   'www', '_next',
 ])

@@ -8,6 +8,7 @@ import {
   STATE_COOKIE,
   verifyOAuthState,
 } from '@/lib/auth'
+import { saveDiscordOwnerProfile } from '@/lib/owner-profile-store'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,7 +16,12 @@ const OWNER_HOME = 'https://www.ayrabot.fun/admin/redirects'
 const LOGIN_PAGE = 'https://www.ayrabot.fun/admin/login'
 
 type TokenResponse = { access_token?: string; token_type?: string }
-type DiscordUser = { id?: string }
+type DiscordUser = {
+  id?: string
+  username?: string
+  global_name?: string | null
+  avatar?: string | null
+}
 
 function finish(url: string, clearState = true) {
   const response = NextResponse.redirect(url, 303)
@@ -75,6 +81,13 @@ export async function GET(request: NextRequest) {
 
     const user = await userResponse.json() as DiscordUser
     if (!user.id || user.id !== ownerId) return finish(`${LOGIN_PAGE}?error=unauthorized`)
+
+    await saveDiscordOwnerProfile({
+      id: user.id,
+      username: user.username ?? '',
+      globalName: user.global_name ?? null,
+      avatarHash: user.avatar ?? null,
+    })
 
     const response = finish(OWNER_HOME)
     response.cookies.set(SESSION_COOKIE, createSessionToken(user.id), {

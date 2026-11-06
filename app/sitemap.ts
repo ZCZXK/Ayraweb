@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next'
 
-const SITE_URL = 'https://www.ayrabot.fun'
-
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    { url: `${SITE_URL}/` },
-    { url: `${SITE_URL}/privacy` },
-    { url: `${SITE_URL}/terms` },
+    { url: 'https://www.ayrabot.fun/' },
+    { url: 'https://cf7yce.ayrabot.fun/' },
+    { url: 'https://cookies.ayrabot.fun/' },
+    { url: 'https://policy.ayrabot.fun/' },
+    { url: 'https://terms.ayrabot.fun/' },
   ]
 }

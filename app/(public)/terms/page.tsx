@@ -3,6 +3,15 @@ import { LegalPage } from '../../../components/legal-page'
 export const metadata: Metadata = {
   title: 'Terms of Service — Ayra',
   description: 'Terms for using the Ayra Discord bot.',
+  alternates: { canonical: 'https://terms.ayrabot.fun/' },
+  openGraph: {
+    type: 'article',
+    url: 'https://terms.ayrabot.fun/',
+    siteName: 'Ayra',
+    title: 'Terms of Service — Ayra',
+    description: 'Terms for using the Ayra Discord bot.',
+  },
+  twitter: { card: 'summary', title: 'Terms of Service — Ayra', description: 'Terms for using the Ayra Discord bot.' },
 }
 
 export default function TermsPage() {
