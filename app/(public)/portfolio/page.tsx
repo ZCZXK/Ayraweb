@@ -80,7 +80,7 @@ export default async function PortfolioPage() {
           ) : (
             <>
               <h2 className="portfolio-display-name">Connect Discord</h2>
-              <p className="portfolio-username">Sign in as the Ayra owner to show your current name and avatar.</p>
+              <p className="portfolio-username">Sign in as the Ayra owner to show your current Discord name and avatar on this public profile.</p>
             </>
           )}
           <dl className="portfolio-details">
