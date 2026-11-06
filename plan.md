@@ -54,3 +54,13 @@ Project structure changes: `app/(public)/portfolio/page.tsx` owns the profile; `
 
 
 Google's publisher guidance supports disclosing Google and third-party advertising cookies, prior-visit ad personalization, and opt-out controls; Google also states personalized AdSense ads in the EEA, UK and Switzerland require an appropriately certified CMP. The page must describe the current site integration without claiming a CMP is in place. Sources: https://support.google.com/adsense/answer/1348695?hl=en ; https://policies.google.com/technologies/ads?hl=en-US ; https://support.google.com/adsense/answer/13554116?hl=en .
+
+
+## Expanded cf7yce developer portfolio
+
+Expand the existing personal page into a complete, responsive portfolio while retaining Ayra's aurora/glass palette with a clearer personal wordmark and stronger type hierarchy. Present the owner with the requested roles—AI developer, Discord bot developer, and web developer—plus a concise first-person introduction. Add clear navigation, an About section, capability cards across those three areas, a featured Ayra project with verified features and links, a project-stack description only where source confirms it, and a contact/social section linking to the public GitHub and Discord profiles. Make the page useful on mobile and visually distinct from Ayra's bot marketing homepage.
+
+Do not invent years of experience, client names, awards, reviews, revenue, usage statistics, proficiency percentages, certifications, or projects. Ayra is the only verified featured project unless the owner supplies more. Keep the existing verified Discord OAuth profile-sync behavior: render the real username/display name/avatar only after the owner-only `identify` flow returns the configured ID. Keep the known Discord ID and clear sign-in path when profile data is not synced. Add route-specific title, description, canonical and social metadata that match the expanded role focus.
+
+
+Public portfolio research note (2026-11-06): The public profile https://github.com/cf7yce has no public repositories listed; the GitHub public API endpoint https://api.github.com/users/cf7yce/repos?per_page=100 returned an empty list. Keep Ayra as the only featured project until the owner provides more public work.
