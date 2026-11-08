@@ -5,6 +5,7 @@ import { OwnerCard } from '../../components/owner-card'
 import { CommandSearch } from '../../components/command-search'
 import { ParticleField } from '../../components/particle-field'
 import { ThemeToggle } from '../../components/theme-toggle'
+import { BotLiveStatus } from '../../components/bot-live-status'
 import { allCommands } from '../../data/command-catalog'
 
 const INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=1489882067239047168&permissions=0&integration_type=0&scope=bot%20applications.commands'
@@ -80,6 +81,7 @@ export default function Home() {
             <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
             <a className="glass-button glass-button--quiet" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Support server</span><Icon name="arrow" className="button-arrow" /></a>
           </div>
+          <BotLiveStatus />
         </div>
         <div className="hero-art" aria-label="Ayra bot icon" data-reveal="right" data-reveal-delay="100">
           <div className="art-orbit art-orbit--one" aria-hidden="true" /><div className="art-orbit art-orbit--two" aria-hidden="true" />
