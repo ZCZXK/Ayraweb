@@ -94,13 +94,18 @@ export function BotLiveStatus() {
             : `${stats.guildCount.toLocaleString()} Discord ${stats.guildCount === 1 ? 'server' : 'servers'}`}
         </span>
         <span className="bot-live-status__divider" aria-hidden="true" />
-        <span className="bot-live-status__count">
+        <span
+          className="bot-live-status__count"
+          title={stats.memberCount === null ? undefined : 'Summed across servers; not unique people.'}
+          aria-label={stats.memberCount === null
+            ? 'Member count unavailable'
+            : `${stats.memberCount.toLocaleString()} members, summed across servers and not unique people`}
+        >
           {stats.memberCount === null
-            ? 'Member total unavailable'
-            : `${stats.memberCount.toLocaleString()} members across servers`}
+            ? 'Members unavailable'
+            : `${stats.memberCount.toLocaleString()} members`}
         </span>
       </div>
-      <p className="bot-live-status__disclaimer">Summed per server; not a count of unique people.</p>
     </section>
   )
 }
