@@ -3,24 +3,36 @@ import { NextResponse } from 'next/server'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-const BOT_STATS_URL = 'https://ayra-production-8db1.up.railway.app/api/stats'
-const UNAVAILABLE = { status: 'unavailable', guildCount: null } as const
+type BotStats = {
+  status: 'online' | 'offline' | 'starting'
+  guildCount: number | null
+  memberCount: number | null
+}
 
-function json(body: typeof UNAVAILABLE | { status: 'online' | 'offline' | 'starting'; guildCount: number | null }) {
+const BOT_STATS_URL = 'https://ayra-production-8db1.up.railway.app/api/stats'
+const UNAVAILABLE: { status: 'unavailable'; guildCount: null; memberCount: null } = {
+  status: 'unavailable',
+  guildCount: null,
+  memberCount: null,
+}
+
+function json(body: typeof UNAVAILABLE | BotStats) {
   return NextResponse.json(body, {
     headers: { 'Cache-Control': 'no-store, max-age=0' },
   })
 }
 
-function isBotStats(value: unknown): value is { status: 'online' | 'offline' | 'starting'; guildCount: number | null } {
+function isBotStats(value: unknown): value is BotStats {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) return false
 
   const candidate = value as Record<string, unknown>
   const validStatus = candidate.status === 'online' || candidate.status === 'offline' || candidate.status === 'starting'
   const validGuildCount = candidate.guildCount === null
-    || (typeof candidate.guildCount === 'number' && Number.isInteger(candidate.guildCount) && candidate.guildCount >= 0)
+    || (typeof candidate.guildCount === 'number' && Number.isSafeInteger(candidate.guildCount) && candidate.guildCount >= 0)
+  const validMemberCount = candidate.memberCount === null
+    || (typeof candidate.memberCount === 'number' && Number.isSafeInteger(candidate.memberCount) && candidate.memberCount >= 0)
 
-  return validStatus && validGuildCount
+  return validStatus && validGuildCount && validMemberCount
 }
 
 export async function GET() {
@@ -35,7 +47,11 @@ export async function GET() {
 
     const payload: unknown = await response.json()
     if (!isBotStats(payload)) return json(UNAVAILABLE)
-    return json({ status: payload.status, guildCount: payload.guildCount })
+    return json({
+      status: payload.status,
+      guildCount: payload.guildCount,
+      memberCount: payload.memberCount,
+    })
   } catch {
     return json(UNAVAILABLE)
   }

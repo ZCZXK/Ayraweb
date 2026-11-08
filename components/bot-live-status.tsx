@@ -3,12 +3,16 @@
 import { useEffect, useState } from 'react'
 
 type DisplayStatus = 'online' | 'offline' | 'connecting' | 'unavailable'
-type BotStats = { status: DisplayStatus; guildCount: number | null }
+type BotStats = { status: DisplayStatus; guildCount: number | null; memberCount: number | null }
 
-const INITIAL_STATE: BotStats = { status: 'connecting', guildCount: null }
+const INITIAL_STATE: BotStats = { status: 'connecting', guildCount: null, memberCount: null }
 const POLL_INTERVAL = 60_000
 
-function isBotStats(value: unknown): value is { status: 'online' | 'offline' | 'starting' | 'unavailable'; guildCount: number | null } {
+function isBotStats(value: unknown): value is {
+  status: 'online' | 'offline' | 'starting' | 'unavailable'
+  guildCount: number | null
+  memberCount: number | null
+} {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) return false
 
   const candidate = value as Record<string, unknown>
@@ -16,10 +20,10 @@ function isBotStats(value: unknown): value is { status: 'online' | 'offline' | '
     || candidate.status === 'offline'
     || candidate.status === 'starting'
     || candidate.status === 'unavailable'
-  const validGuildCount = candidate.guildCount === null
-    || (typeof candidate.guildCount === 'number' && Number.isInteger(candidate.guildCount) && candidate.guildCount >= 0)
+  const validCount = (count: unknown) => count === null
+    || (typeof count === 'number' && Number.isSafeInteger(count) && count >= 0)
 
-  return validStatus && validGuildCount
+  return validStatus && validCount(candidate.guildCount) && validCount(candidate.memberCount)
 }
 
 function statusLabel(status: DisplayStatus) {
@@ -49,15 +53,16 @@ export function BotLiveStatus() {
 
         if (!active) return
         if (!isBotStats(payload)) {
-          setStats({ status: 'unavailable', guildCount: null })
+          setStats({ status: 'unavailable', guildCount: null, memberCount: null })
         } else {
           setStats({
             status: payload.status === 'starting' ? 'connecting' : payload.status,
             guildCount: payload.guildCount,
+            memberCount: payload.memberCount,
           })
         }
       } catch {
-        if (active) setStats({ status: 'unavailable', guildCount: null })
+        if (active) setStats({ status: 'unavailable', guildCount: null, memberCount: null })
       } finally {
         if (active) timeoutId = setTimeout(refresh, POLL_INTERVAL)
       }
@@ -88,7 +93,14 @@ export function BotLiveStatus() {
             ? 'Server count unavailable'
             : `${stats.guildCount.toLocaleString()} Discord ${stats.guildCount === 1 ? 'server' : 'servers'}`}
         </span>
+        <span className="bot-live-status__divider" aria-hidden="true" />
+        <span className="bot-live-status__count">
+          {stats.memberCount === null
+            ? 'Member total unavailable'
+            : `${stats.memberCount.toLocaleString()} members across servers`}
+        </span>
       </div>
+      <p className="bot-live-status__disclaimer">Summed per server; not a count of unique people.</p>
     </section>
   )
 }
