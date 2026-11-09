@@ -7,13 +7,15 @@ type BotStats = {
   status: 'online' | 'offline' | 'starting'
   guildCount: number | null
   memberCount: number | null
+  pingMs: number | null
 }
 
 const BOT_STATS_URL = 'https://ayra-production-8db1.up.railway.app/api/stats'
-const UNAVAILABLE: { status: 'unavailable'; guildCount: null; memberCount: null } = {
+const UNAVAILABLE: { status: 'unavailable'; guildCount: null; memberCount: null; pingMs: null } = {
   status: 'unavailable',
   guildCount: null,
   memberCount: null,
+  pingMs: null,
 }
 
 function json(body: typeof UNAVAILABLE | BotStats) {
@@ -27,12 +29,13 @@ function isBotStats(value: unknown): value is BotStats {
 
   const candidate = value as Record<string, unknown>
   const validStatus = candidate.status === 'online' || candidate.status === 'offline' || candidate.status === 'starting'
-  const validGuildCount = candidate.guildCount === null
-    || (typeof candidate.guildCount === 'number' && Number.isSafeInteger(candidate.guildCount) && candidate.guildCount >= 0)
-  const validMemberCount = candidate.memberCount === null
-    || (typeof candidate.memberCount === 'number' && Number.isSafeInteger(candidate.memberCount) && candidate.memberCount >= 0)
+  const validCount = (count: unknown) => count === null
+    || (typeof count === 'number' && Number.isSafeInteger(count) && count >= 0)
 
-  return validStatus && validGuildCount && validMemberCount
+  return validStatus
+    && validCount(candidate.guildCount)
+    && validCount(candidate.memberCount)
+    && validCount(candidate.pingMs)
 }
 
 export async function GET() {
@@ -51,6 +54,7 @@ export async function GET() {
       status: payload.status,
       guildCount: payload.guildCount,
       memberCount: payload.memberCount,
+      pingMs: payload.pingMs,
     })
   } catch {
     return json(UNAVAILABLE)
