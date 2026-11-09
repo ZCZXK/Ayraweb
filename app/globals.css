@@ -528,7 +528,7 @@ html[data-theme="light"] .portfolio-contact { border-color: rgba(31,66,49,.14); 
 
 
 /* Ayra live status widget */
-.bot-live-status { width: min(100%, 470px); margin-top: 25px; padding: 21px; border: 1px solid rgba(220,255,236,.18); border-radius: 21px; background: radial-gradient(ellipse at 0% 0%, rgba(116,230,170,.13), transparent 48%), linear-gradient(135deg, rgba(255,255,255,.105), rgba(255,255,255,.035) 65%, rgba(165,255,210,.075)); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 18px 48px rgba(0,0,0,.2); color: var(--text); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.bot-live-status { width: min(calc(100% - 44px), 470px); margin: -42px auto 72px; padding: 21px; border: 1px solid rgba(220,255,236,.18); border-radius: 21px; background: radial-gradient(ellipse at 0% 0%, rgba(116,230,170,.13), transparent 48%), linear-gradient(135deg, rgba(255,255,255,.105), rgba(255,255,255,.035) 65%, rgba(165,255,210,.075)); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 18px 48px rgba(0,0,0,.2); color: var(--text); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
 .bot-live-status__heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
 .bot-live-status__heading-copy { display: grid; gap: 5px; }
 .bot-live-status__eyebrow { color: rgba(223,237,231,.7); font-size: 9px; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
@@ -554,7 +554,7 @@ html[data-theme="light"] .bot-live-status--online .bot-live-status__metric--stat
 html[data-theme="light"] .bot-live-status--offline .bot-live-status__metric--status .bot-live-status__value, html[data-theme="light"] .bot-live-status--unavailable .bot-live-status__metric--status .bot-live-status__value { color: #a83c3c; }
 @keyframes ayra-status-pulse { 50% { box-shadow: 0 0 0 6px rgba(116,230,170,.06), 0 0 17px rgba(116,230,170,.44); } }
 @media (max-width: 760px) {
-  .bot-live-status { margin-top: 21px; }
+  .bot-live-status { margin: -27px auto 52px; }
 }
 @media (max-width: 420px) {
   .bot-live-status { padding: 17px; border-radius: 18px; }

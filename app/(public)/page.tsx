@@ -81,7 +81,6 @@ export default function Home() {
             <a className="glass-button glass-button--primary" href={INVITE_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Invite Ayra</span><Icon name="arrow" className="button-arrow" /></a>
             <a className="glass-button glass-button--quiet" href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"><Icon name="discord" /><span>Support server</span><Icon name="arrow" className="button-arrow" /></a>
           </div>
-          <BotLiveStatus />
         </div>
         <div className="hero-art" aria-label="Ayra bot icon" data-reveal="right" data-reveal-delay="100">
           <div className="art-orbit art-orbit--one" aria-hidden="true" /><div className="art-orbit art-orbit--two" aria-hidden="true" />
@@ -94,6 +93,8 @@ export default function Home() {
         <div className="section-heading"><div><p className="eyebrow"><span className="eyebrow-line" /> About the bot</p><h2 id="about-title">What is Ayra?</h2></div></div>
         <p className="about-copy">Ayra Bot is a multipurpose Discord bot for managing and supporting online communities. Server teams can use slash commands for moderation, AutoMod and anti-nuke protection, ticket support and reports, invite tracking, giveaways, polls, member profiles, and everyday server utilities. Administrators can configure moderation roles and protection features to fit their server.</p>
       </section>
+
+      <BotLiveStatus />
 
       <section className="section commands-section" id="commands" aria-labelledby="commands-title">
         <div className="section-heading"><div><p className="eyebrow"><span className="eyebrow-line" /> Ayra</p><h2 id="commands-title">Commands</h2></div></div>

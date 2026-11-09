@@ -1,7 +1,6 @@
 
 
-## Live Ayra bot status, server-count, and aggregate-member integration
+## Ayra status card and labeled ping demo
 - The public bot repository `cf7yce/Ayra` uses Node.js ES modules and discord.js 14.27; Railway starts it with `pnpm start`. Use the built-in `node:http` server, binding `0.0.0.0` on Railway's `PORT`, without adding a framework dependency.
-- Serve a read-only `GET /api/stats` response with actual online/starting/offline state, guild/server count, summed member count across cached guilds, and actual Discord WebSocket heartbeat ping in milliseconds from `client.ws.ping`. Report online only when discord.js says the client is ready; return null measurements before readiness or when metadata is unavailable. The aggregate counts a person once per server, not as a unique-user total. Do not expose IDs, bot tokens, database contents or diagnostics.
-- In Ayraweb, use a same-origin server route `/api/bot-stats` with a short timeout, `no-store` behavior, strict validation and an unavailable fallback. The homepage widget polls periodically and presents status, servers, members, and WebSocket ping in a larger responsive 2×2 glass panel. Keep the member total’s one simple visible label and its non-unique explanation in accessible/hover text. Never fabricate measurements or call Railway directly from the browser.
-- The status, server-count, and member-count integration is live. The WebSocket ping API field and expanded panel are being implemented; publish the bot-side change to `cf7yce/Ayra` with a write-authorized connection, then publish the site update to `ZCZXK/Ayraweb`.
+- The deployed `/api/stats` and same-origin `/api/bot-stats` endpoints serve actual status, server count, and aggregate member count. The aggregate counts memberships per server, not unique people.
+- The homepage’s larger 2×2 glass status card is positioned directly below the About section and polls actual status/server/member values. The fourth tile cycles text examples such as `23ms` and is explicitly labeled “Demo ping”; it is illustrative only and must never be presented as real latency. The owner chose this demo so no GitHub account reconnection is required.

@@ -7,17 +7,17 @@ type BotStats = {
   status: DisplayStatus
   guildCount: number | null
   memberCount: number | null
-  pingMs: number | null
 }
 
-const INITIAL_STATE: BotStats = { status: 'connecting', guildCount: null, memberCount: null, pingMs: null }
+const INITIAL_STATE: BotStats = { status: 'connecting', guildCount: null, memberCount: null }
 const POLL_INTERVAL = 15_000
+const DEMO_PING_VALUES = ['23ms', '27ms', '35ms', '30ms'] as const
+const DEMO_PING_INTERVAL = 1_800
 
 function isBotStats(value: unknown): value is {
   status: 'online' | 'offline' | 'starting' | 'unavailable'
   guildCount: number | null
   memberCount: number | null
-  pingMs: number | null
 } {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) return false
 
@@ -32,7 +32,6 @@ function isBotStats(value: unknown): value is {
   return validStatus
     && validCount(candidate.guildCount)
     && validCount(candidate.memberCount)
-    && validCount(candidate.pingMs)
 }
 
 function statusLabel(status: DisplayStatus) {
@@ -44,6 +43,7 @@ function statusLabel(status: DisplayStatus) {
 
 export function BotLiveStatus() {
   const [stats, setStats] = useState<BotStats>(INITIAL_STATE)
+  const [demoPingIndex, setDemoPingIndex] = useState(0)
 
   useEffect(() => {
     let active = true
@@ -62,17 +62,16 @@ export function BotLiveStatus() {
 
         if (!active) return
         if (!isBotStats(payload)) {
-          setStats({ status: 'unavailable', guildCount: null, memberCount: null, pingMs: null })
+          setStats({ status: 'unavailable', guildCount: null, memberCount: null })
         } else {
           setStats({
             status: payload.status === 'starting' ? 'connecting' : payload.status,
             guildCount: payload.guildCount,
             memberCount: payload.memberCount,
-            pingMs: payload.pingMs,
           })
         }
       } catch {
-        if (active) setStats({ status: 'unavailable', guildCount: null, memberCount: null, pingMs: null })
+        if (active) setStats({ status: 'unavailable', guildCount: null, memberCount: null })
       } finally {
         if (active) timeoutId = setTimeout(refresh, POLL_INTERVAL)
       }
@@ -87,9 +86,16 @@ export function BotLiveStatus() {
     }
   }, [])
 
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setDemoPingIndex((current) => (current + 1) % DEMO_PING_VALUES.length)
+    }, DEMO_PING_INTERVAL)
+    return () => window.clearInterval(timer)
+  }, [])
+
   const statusText = statusLabel(stats.status)
   const memberValue = stats.memberCount === null ? '—' : stats.memberCount.toLocaleString()
-  const gatewayPingValue = stats.pingMs === null ? '—' : `${stats.pingMs.toLocaleString()}ms`
+  const demoPingValue = DEMO_PING_VALUES[demoPingIndex]
 
   return (
     <section className={`bot-live-status bot-live-status--${stats.status}`} aria-label="Ayra live bot statistics">
@@ -127,17 +133,13 @@ export function BotLiveStatus() {
         </div>
         <div
           className="bot-live-status__metric bot-live-status__metric--ping"
-          title="Discord Gateway WebSocket heartbeat round-trip latency"
+          title="Rotating sample text only; this is not a measured Discord or bot latency."
+          aria-label="Demo ping. Rotating sample numbers, not a live latency measurement."
         >
-          <span className="bot-live-status__label">WebSocket ping</span>
-          <span className="bot-live-status__value">
-            {gatewayPingValue}
-          </span>
+          <span className="bot-live-status__label">Demo ping</span>
+          <span className="bot-live-status__value" aria-hidden="true">{demoPingValue}</span>
         </div>
       </div>
-      <span className="bot-live-status__sr-only">
-        {stats.pingMs === null ? 'WebSocket latency is unavailable.' : 'Ping is the bot WebSocket heartbeat round-trip time to Discord.'}
-      </span>
     </section>
   )
 }
