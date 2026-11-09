@@ -7,7 +7,7 @@ type BotStats = {
   status: 'online' | 'offline' | 'starting'
   guildCount: number | null
   memberCount: number | null
-  pingMs: number | null
+  pingMs?: number | null
 }
 
 const BOT_STATS_URL = 'https://ayra-production-8db1.up.railway.app/api/stats'
@@ -35,7 +35,7 @@ function isBotStats(value: unknown): value is BotStats {
   return validStatus
     && validCount(candidate.guildCount)
     && validCount(candidate.memberCount)
-    && validCount(candidate.pingMs)
+    && (candidate.pingMs === undefined || validCount(candidate.pingMs))
 }
 
 export async function GET() {
@@ -54,7 +54,7 @@ export async function GET() {
       status: payload.status,
       guildCount: payload.guildCount,
       memberCount: payload.memberCount,
-      pingMs: payload.pingMs,
+      pingMs: payload.pingMs ?? null,
     })
   } catch {
     return json(UNAVAILABLE)

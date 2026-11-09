@@ -11,7 +11,7 @@ type BotStats = {
 }
 
 const INITIAL_STATE: BotStats = { status: 'connecting', guildCount: null, memberCount: null, pingMs: null }
-const POLL_INTERVAL = 30_000
+const POLL_INTERVAL = 15_000
 
 function isBotStats(value: unknown): value is {
   status: 'online' | 'offline' | 'starting' | 'unavailable'
@@ -89,7 +89,7 @@ export function BotLiveStatus() {
 
   const statusText = statusLabel(stats.status)
   const memberValue = stats.memberCount === null ? '—' : stats.memberCount.toLocaleString()
-  const gatewayPingValue = stats.pingMs === null ? '—' : `${stats.pingMs.toLocaleString()} ms`
+  const gatewayPingValue = stats.pingMs === null ? '—' : `${stats.pingMs.toLocaleString()}ms`
 
   return (
     <section className={`bot-live-status bot-live-status--${stats.status}`} aria-label="Ayra live bot statistics">

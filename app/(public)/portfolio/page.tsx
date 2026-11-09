@@ -116,15 +116,14 @@ export default async function PortfolioPage() {
             </>
           ) : (
             <>
-              <h2 className="portfolio-display-name">Connect Discord</h2>
-              <p className="portfolio-username">Sign in as the Ayra owner to show your current Discord name and avatar on this public profile.</p>
+              <h2 className="portfolio-display-name">Discord profile</h2>
+              <p className="portfolio-username">The owner’s Discord name and avatar appear here after private verification.</p>
             </>
           )}
           <dl className="portfolio-details">
             <div><dt>Discord ID</dt><dd><a href={DISCORD_PROFILE_URL} target="_blank" rel="noopener noreferrer"><code>{profile?.userId ?? DISCORD_ID}</code><ArrowIcon /></a></dd></div>
             <div><dt>GitHub</dt><dd><a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">cf7yce <ArrowIcon /></a></dd></div>
           </dl>
-          {!profile && <a className="portfolio-connect" href="https://www.ayrabot.fun/api/auth/discord/login">Connect Discord profile <ArrowIcon /></a>}
           {profile && <a className="portfolio-connect" href={DISCORD_PROFILE_URL} target="_blank" rel="noopener noreferrer">Open Discord profile <ArrowIcon /></a>}
         </aside>
       </section>
